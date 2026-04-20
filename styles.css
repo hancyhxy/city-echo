@@ -406,6 +406,13 @@ strong { color: var(--ink); }
 
 .trace--qing { transform: translate(-50%, -50%) rotate(2deg); }
 
+.trace--badge {
+  font-style: normal;
+  font-size: 12px;
+  padding: 4px 10px;
+  letter-spacing: 0.02em;
+}
+
 /* Protagonist traces — Mei's and Qing's own contributions.
    Tone-aware: colour tracks the chapter's --signal, so the trace warms
    from amber (Mei chapter) through rose (Qing chapter) to brick-red
@@ -640,6 +647,15 @@ body[data-tone="finale"] .story-card__inner { background: rgba(252, 224, 212, 0.
   border-left: 2px solid var(--signal-warm);
   padding-left: 14px;
   margin-top: 20px;
+}
+
+.story-body p.thesis {
+  color: var(--ink);
+  font-weight: 600;
+  margin-top: 20px;
+  border-left: 2px solid var(--signal);
+  border-right: 2px solid var(--signal);
+  padding: 0 14px;
 }
 
 .step--transition .step-meta {

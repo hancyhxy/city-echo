@@ -79,7 +79,7 @@
       content: {
         meta:  'Mei · UTS Library · curious, lifted',
         title: 'She picks a feeling, not a genre.',
-        body:  '<p>She picks a mood — <strong>focus</strong> — and a language — <strong>中文</strong>. The library\'s playlist reshuffles around her. A song surfaces with a quiet note: <em>"12 students in this building are listening right now."</em> She didn\'t choose it. The room did.</p>'
+        body:  '<p>She picks a mood — focus — and a language — Chinese. The library\'s playlist reshuffles around her. A song surfaces with a quiet note: <em>"12 students in this building are listening right now."</em> She didn\'t choose it. The room did.</p>'
       },
       mapView: { src: 'cbd', x: -2, y: -2, scale: 1.15 },
       active: ['uts'],
@@ -118,7 +118,7 @@
       mapView: { src: 'cbd', x: 0, y: 0, scale: 1.0 },
       active: [],
       anchored: ['uts'],
-      traces: [],
+      traces: ['mei-playlist'],
       echoNotes: [],
       rail: false,
       count: 102,
@@ -164,7 +164,7 @@
       content: {
         meta:  'Qing · mid-commute · held',
         title: 'A stranger left a song along her exact line — and it isn\'t even in her language.',
-        body:  '<p>The track is <em>"Ribs" by Lorde</em>. English. Slow piano synth. <em>"It feels so scary getting old."</em> Attached: <em>"Mandarin is my first language but this song held me anyway. Played it between Strathfield and Central every night of my first semester."</em> She listens. She leaves her own trace. She doesn\'t know the stranger\'s name. She doesn\'t need to.</p><p class="quiet">Belonging didn\'t need a shared language. It needed a shared three minutes.</p>'
+        body:  '<p>The track is <em>"Ribs" by Lorde</em>. English. Slow piano synth. <em>"It feels so scary getting old."</em> Attached: <em>"Mandarin is my first language but this song held me anyway. Played it between Strathfield and Central every night of my first semester."</em> She listens. She leaves her own trace. She doesn\'t know the stranger\'s name. She doesn\'t need to.</p><p class="thesis">Belonging didn\'t need a shared language. It needed a shared three minutes.</p>'
       },
       mapView: { src: 'wide', x: -8, y: 2, scale: 1.2 },
       active: ['burwood', 'central', 'wynyard'],
@@ -181,7 +181,7 @@
       content: {
         meta:  'Mei + Qing · across Sydney · at home, apart',
         title: 'Belonging is pinned across the city — not located in any one place.',
-        body:  '<p>Mei never moved from a single library chair. Qing crossed half of Sydney. Both leave a piece of themselves where they were. Both carry a piece of someone else\'s home back. The map you\'ve just watched fill up <em>is</em> the design — it shows belonging as residue, distributed, asynchronous, low-pressure.</p><p class="quiet">The three kinds of <strong>parts</strong> — places, sounds, people — connect through a single surface: the map. The three screens — <strong>Map Discovery → Music Discovery → Artist Story</strong> — are how a user moves through them. Asymmetric by design: artists are named, users never are.</p>'
+        body:  '<p>Mei never moved from a single library chair. Qing crossed half of Sydney. Both leave a piece of themselves where they were. Both carry a piece of someone else\'s home back. The map you\'ve just watched fill up <em>is</em> the design — it shows belonging as residue, distributed, asynchronous, low-pressure.</p><p class="thesis">The three kinds of parts — places, sounds, people — connect through a single surface: the map. The three screens — Map Discovery → Music Discovery → Artist Story — are how a user moves through them. Asymmetric by design: artists are named, users never are.</p>'
       },
       mapView: { src: 'finale', x: 0, y: 0, scale: 1.0 },     // switch to coral basemap, full panorama
       active: [],
