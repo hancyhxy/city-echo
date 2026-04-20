@@ -79,7 +79,7 @@
       content: {
         meta:  'Mei · UTS Library · curious, lifted',
         title: 'She picks a feeling, not a genre.',
-        body:  '<p><strong>focus · 中文</strong>. Two filter chips light amber. The library\'s playlist reshuffles in real time — <em>"played by 12 students in this building right now."</em> She didn\'t choose the song. The library offered it.</p>'
+        body:  '<p>She picks a mood — <strong>focus</strong> — and a language — <strong>中文</strong>. The library\'s playlist reshuffles around her. A song surfaces with a quiet note: <em>"12 students in this building are listening right now."</em> She didn\'t choose it. The room did.</p>'
       },
       mapView: { src: 'cbd', x: -2, y: -2, scale: 1.15 },
       active: ['uts'],
@@ -96,7 +96,7 @@
       content: {
         meta:  'Mei · UTS Library · recognised',
         title: 'A stranger has been in her chair before.',
-        body:  '<p><em>"listened to this during my thesis all-nighter, felt less alone."</em> No name, no message — just a fingerprint attached to a song. At the end of the track, Mei adds her own: <em>"first thing that\'s helped me write in Mandarin all week."</em></p>'
+        body:  '<p><em>"listened to this during my thesis all-nighter, felt less alone."</em> A fingerprint attached to the song — no name, no message, just a feeling. At the end of the track, Mei adds her own: <em>"first thing that\'s helped me write in Mandarin all week."</em></p>'
       },
       mapView: { src: 'cbd', x: -2, y: -2, scale: 1.15 },
       active: ['uts'],
@@ -113,7 +113,7 @@
       content: {
         meta:  'Mei · UTS Library · quiet belonging',
         title: 'She belongs to this room now.',
-        body:  '<p><em>"Your story has joined 48 others at UTS Library tonight."</em> She glances up — for the first time, the other students are not strangers but a quiet constellation of listeners. She never spoke a word.</p>'
+        body:  '<p><em>"Your trace has joined 48 others at UTS Library tonight."</em> She glances up — for the first time, the other students are not strangers but a quiet constellation of listeners. She never spoke a word.</p>'
       },
       mapView: { src: 'cbd', x: 0, y: 0, scale: 1.0 },
       active: [],
@@ -147,7 +147,7 @@
       content: {
         meta:  'Qing · Burwood → Wynyard line · curious, wide',
         title: 'Her train route has its own music.',
-        body:  '<p><em>"Burwood → Wynyard line · 218 commuters are sharing music along this route tonight."</em> She opens Explore. The map shows a city organised not by streets, but by what people have felt here — song by song.</p>'
+        body:  '<p><em>"Burwood → Wynyard line · 218 commuters are sharing music along this route tonight."</em> She switches to the map view. The city reshapes itself — organised not by streets, but by what people have felt at each stop, song by song.</p>'
       },
       mapView: { src: 'wide', x: 0, y: 0, scale: 1.15 },
       active: ['burwood', 'spice', 'central'],
@@ -164,7 +164,7 @@
       content: {
         meta:  'Qing · mid-commute · held',
         title: 'A stranger left a song along her exact line — and it isn\'t even in her language.',
-        body:  '<p>The track is <em>"Ribs" by Lorde</em>. English. Slow piano synth. <em>"It feels so scary getting old."</em> Attached: <em>"Mandarin is my first language but this song held me anyway. Played it between Strathfield and Central every night of my first semester."</em> She listens. She leaves her own. For the first time in this app, she taps <em>"send friend request."</em></p><p class="quiet">Belonging didn\'t need a shared language. It needed a shared three minutes.</p>'
+        body:  '<p>The track is <em>"Ribs" by Lorde</em>. English. Slow piano synth. <em>"It feels so scary getting old."</em> Attached: <em>"Mandarin is my first language but this song held me anyway. Played it between Strathfield and Central every night of my first semester."</em> She listens. She leaves her own trace. She doesn\'t know the stranger\'s name. She doesn\'t need to.</p><p class="quiet">Belonging didn\'t need a shared language. It needed a shared three minutes.</p>'
       },
       mapView: { src: 'wide', x: -8, y: 2, scale: 1.2 },
       active: ['burwood', 'central', 'wynyard'],
