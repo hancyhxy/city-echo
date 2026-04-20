@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+._*
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Claude Code local config
+.claude/
+
+# Course materials — not for public distribution
+rubric.md
+
+# Unused reference images (superseded by section_d_narrative/map-{cbd,wide,finale}.png
+# and by storyboard/storyboard{1,2}/ frame PNGs)
+image.png
+sydney.png
+sydney_2.png
+sydney_3.png
+sydney_map.png
+Storyboard 1 · UTS Library.png
+Storyboard 2 · Burwood → Wynyard Commute.png

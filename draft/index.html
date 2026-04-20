@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>City Echo — Ideation Document &amp; Technical Blueprint</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="document">
+
+    <!-- ================================================
+         COVER
+         ================================================ -->
+    <section class="cover">
+      <p class="course-tag">UTS Digital Experience Studio — 2026 · Assignment 2 (Group)</p>
+      <h1 class="cover-title">City Echo</h1>
+      <p class="cover-subtitle">A shared soundscape for belonging.</p>
+      <p class="cover-oneliner">
+        An app that turns everyday Sydney places into emotional listening rooms, helping newcomers feel connected without social pressure.
+      </p>
+      <div class="cover-meta">
+        <p><strong>Team:</strong> Xinyi Han · Patrick · Fanghua Li · Jiayao · Evelyn</p>
+        <p><strong>Document:</strong> Ideation Document with Technical Blueprint</p>
+        <p><strong>Submission:</strong> Week 8</p>
+      </div>
+    </section>
+
+    <!-- ================================================
+         SECTION A — INTRODUCTION (owned by group member)
+         ================================================ -->
+    <section class="section" id="section-a">
+      <header class="section-header">
+        <span class="section-letter">A</span>
+        <div>
+          <h2 class="section-title">Introduction</h2>
+          <p class="section-subtitle">Users, current experience, and design goals</p>
+        </div>
+      </header>
+
+      <div class="placeholder">
+        <p class="placeholder-label">To be written by group member</p>
+        <p>
+          This section should cover: (1) who our users are (anchored to the Mei Chen persona from Assignment 2), (2) the current experience — context, problems, needs, opportunities — drawn from our 5 team interviews and affinity diagram, and (3) the design goals (projected outcome of City Echo).
+          <strong>Experience Stories</strong> are required to support these definitions — see the 8 themes in <em>group_affinity_diagram/group_affinity_final.md</em> for source material.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================================================
+         SECTION B — INSPIRATIONS & JUSTIFICATIONS
+         ================================================ -->
+    <section class="section" id="section-b">
+      <header class="section-header">
+        <span class="section-letter">B</span>
+        <div>
+          <h2 class="section-title">Inspirations &amp; Justifications</h2>
+          <p class="section-subtitle">What informed this idea and why it matters</p>
+        </div>
+      </header>
+
+      <div class="placeholder">
+        <p class="placeholder-label">To be written by group member</p>
+        <p>
+          Draws on: desk research (see <em>deskresearch_stage/research_document.md</em>); landscape analogues (Smule, Spotify Blend, Music in Exile, SBS Audio, Harmony Week); the core insight that <strong>shared music interest is a stronger connector than shared culture</strong> (Group Affinity theme 4.4); and the interview finding that <strong>hearing home language/music in public triggers instant belonging</strong> (theme 4.6).
+        </p>
+      </div>
+    </section>
+
+    <!-- ================================================
+         SECTION C — TWO SCENARIOS
+         ================================================ -->
+    <section class="section" id="section-c">
+      <header class="section-header">
+        <span class="section-letter">C</span>
+        <div>
+          <h2 class="section-title">Two Scenarios</h2>
+          <p class="section-subtitle">How Mei Chen uses City Echo in two contrasting everyday moments</p>
+        </div>
+      </header>
+
+      <p class="section-intro">
+        Both storyboards follow the convention from Sharp, Rogers &amp; Preece, <em>Fundamentals of Interaction Design</em>: each frame describes the <strong>scene</strong>, the <strong>user action</strong>, and the <strong>system response</strong>, with a short narrative caption. Emotional beats anchor to the Mei Chen persona. Scenarios are designed as contrasting arcs — <em>receiving</em> (Library) and <em>contributing</em> (Central Station) — so together they show the full experience cycle.
+      </p>
+
+      <!-- ============ SCENARIO 1 ============ -->
+      <article class="scenario">
+        <header class="scenario-header">
+          <h3 class="scenario-title">Scenario 1 — UTS Library: The Study Companion</h3>
+          <p class="scenario-arc"><strong>Arc:</strong> inward · <strong>Goal:</strong> ambient co-presence</p>
+        </header>
+
+        <div class="storyboard">
+
+          <div class="frame">
+            <div class="frame-image"><img src="images/s1-f01.png" alt="Frame 1 — Same loop, again" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+              <span class="image-placeholder">Frame 1 image</span>
+            </div>
+            <p class="frame-number">Frame 1 · supporting</p>
+            <p class="frame-title">Same loop, again</p>
+            <p class="frame-caption">Another study session, another loop through the same five songs. The algorithm has run out of ideas.</p>
+          </div>
+
+          <div class="frame">
+            <div class="frame-image"><img src="images/s1-f02.png" alt="Frame 2 — You've arrived" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+              <span class="image-placeholder">Frame 2 image</span>
+            </div>
+            <p class="frame-number">Frame 2 · supporting</p>
+            <p class="frame-title">You've arrived</p>
+            <p class="frame-caption">The place itself speaks up. Someone is already listening here.</p>
+          </div>
+
+          <div class="frame hero">
+            <div class="frame-image"><img src="images/s1-f03.png" alt="Frame 3 — Map Discovery" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+              <span class="image-placeholder">Frame 3 image (hero)</span>
+            </div>
+            <p class="frame-number">Frame 3 · <span class="hero-tag">hero</span></p>
+            <p class="frame-title">Map Discovery</p>
+            <p class="frame-caption">The map makes belonging visible — every glowing dot is a place where people are already listening together.</p>
+          </div>
+
+          <div class="frame">
+            <div class="frame-image"><img src="images/s1-f04.png" alt="Frame 4 — Mood filter" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+              <span class="image-placeholder">Frame 4 image</span>
+            </div>
+            <p class="frame-number">Frame 4 · supporting</p>
+            <p class="frame-title">Mood filter</p>
+            <p class="frame-caption">One tap chooses not a genre but a feeling — the same place offers different soundscapes depending on what she needs.</p>
+          </div>
+
+          <div class="frame hero">
+            <div class="frame-image"><img src="images/s1-f05.png" alt="Frame 5 — Playback" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+              <span class="image-placeholder">Frame 5 image (hero)</span>
+            </div>
+            <p class="frame-number">Frame 5 · <span class="hero-tag">hero</span></p>
+            <p class="frame-title">Playback</p>
+            <p class="frame-caption">She is not alone in this track. Twelve other students, somewhere in this building, are inside the same three minutes of music.</p>
+          </div>
+
+          <div class="frame">
+            <div class="frame-image"><img src="images/s1-f06.png" alt="Frame 6 — Quiet recognition" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+              <span class="image-placeholder">Frame 6 image</span>
+            </div>
+            <p class="frame-number">Frame 6 · supporting</p>
+            <p class="frame-title">Quiet recognition</p>
+            <p class="frame-caption">No names, no chat — just the quiet acknowledgement that other bodies in this building are sharing this moment.</p>
+          </div>
+
+          <div class="frame">
+            <div class="frame-image"><img src="images/s1-f07.png" alt="Frame 7 — Left here by others" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+              <span class="image-placeholder">Frame 7 image</span>
+            </div>
+            <p class="frame-number">Frame 7 · supporting</p>
+            <p class="frame-title">Left here by others</p>
+            <p class="frame-caption">Strangers have been here before her — each leaving one small emotional fingerprint attached to a song.</p>
+          </div>
+
+          <div class="frame hero">
+            <div class="frame-image"><img src="images/s1-f08.png" alt="Frame 8 — Trace close-up" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+              <span class="image-placeholder">Frame 8 image (hero)</span>
+            </div>
+            <p class="frame-number">Frame 8 · <span class="hero-tag">hero</span></p>
+            <p class="frame-title">Trace close-up</p>
+            <p class="frame-caption">Someone she will never meet wrote a sentence she could have written herself. The smallest act of agreement — "me too" — is enough.</p>
+          </div>
+
+          <div class="frame">
+            <div class="frame-image"><img src="images/s1-f09.png" alt="Frame 9 — Artist Story" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+              <span class="image-placeholder">Frame 9 image</span>
+            </div>
+            <p class="frame-number">Frame 9 · supporting</p>
+            <p class="frame-title">Artist Story</p>
+            <p class="frame-caption">Behind the song is a person whose path resembles hers. The music stops being anonymous.</p>
+          </div>
+
+          <div class="frame hero">
+            <div class="frame-image"><img src="images/s1-f10.png" alt="Frame 10 — You are part of this" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+              <span class="image-placeholder">Frame 10 image (hero)</span>
+            </div>
+            <p class="frame-number">Frame 10 · <span class="hero-tag">hero</span></p>
+            <p class="frame-title">You are part of this</p>
+            <p class="frame-caption">She did not meet anyone. She did not speak. And yet the room feels inhabited — by her, and by everyone else who has listened here.</p>
+          </div>
+
+        </div>
+
+        <div class="goal-callout">
+          <h4>Experiential goal supported — Ambient co-presence</h4>
+          <p>
+            Mei feels <em>with</em> strangers without needing to interact. The UI withholds chat, names, and profiles — deliberately — so that belonging arises from simultaneity and shared emotional trace, not social performance. This directly addresses the persona's <em>"hearts aren't enough"</em> frustration: instead of shallow broadcast reactions, Mei gets ambient, indirect confirmation that she is not alone.
+          </p>
+        </div>
+      </article>
+
+      <!-- ============ SCENARIO 2 ============ -->
+      <article class="scenario">
+        <header class="scenario-header">
+          <h3 class="scenario-title">Scenario 2 — Central Station: Commute Moment</h3>
+          <p class="scenario-arc"><strong>Arc:</strong> outward · <strong>Goal:</strong> distributed belonging</p>
+        </header>
+
+        <div class="storyboard">
+
+          <div class="frame hero">
+            <div class="frame-image"><img src="images/s2-f01.png" alt="Frame 1 — Platform, post-class" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+              <span class="image-placeholder">Frame 1 image (hero)</span>
+            </div>
+            <p class="frame-number">Frame 1 · <span class="hero-tag">hero</span></p>
+            <p class="frame-title">Platform, post-class</p>
+            <p class="frame-caption">End of a ten-hour day in English. Her mind is done; she is waiting for the train and for the Mandarin music on her commute home.</p>
+          </div>
+
+          <div class="frame">
+            <div class="frame-image"><img src="images/s2-f02.png" alt="Frame 2 — Central Station speaks" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+              <span class="image-placeholder">Frame 2 image</span>
+            </div>
+            <p class="frame-number">Frame 2 · supporting</p>
+            <p class="frame-title">Central Station speaks</p>
+            <p class="frame-caption">The station is not silent — 182 invisible ears are tuned in around her.</p>
+          </div>
+
+          <div class="frame">
+            <div class="frame-image"><img src="images/s2-f03.png" alt="Frame 3 — City glow" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+              <span class="image-placeholder">Frame 3 image</span>
+            </div>
+            <p class="frame-number">Frame 3 · supporting</p>
+            <p class="frame-title">City glow</p>
+            <p class="frame-caption">She sees her commute route lit up like a constellation — each station glowing with its own emotional weather.</p>
+          </div>
+
+          <div class="frame">
+            <div class="frame-image"><img src="images/s2-f04.png" alt="Frame 4 — Commute mood" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+              <span class="image-placeholder">Frame 4 image</span>
+            </div>
+            <p class="frame-number">Frame 4 · supporting</p>
+            <p class="frame-title">Commute mood</p>
+            <p class="frame-caption">A song she has never heard before, chosen not by an algorithm but by another commuter standing in her city.</p>
+          </div>
+
+          <div class="frame">
+            <div class="frame-image"><img src="images/s2-f05.png" alt="Frame 5 — A stranger's home" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+              <span class="image-placeholder">Frame 5 image</span>
+            </div>
+            <p class="frame-number">Frame 5 · supporting</p>
+            <p class="frame-title">A stranger's home</p>
+            <p class="frame-caption">Someone else's "home" enters her ears. It is not her home — but it has the texture of longing she knows.</p>
+          </div>
+
+          <div class="frame hero">
+            <div class="frame-image"><img src="images/s2-f06.png" alt="Frame 6 — Artist Story: displacement" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+              <span class="image-placeholder">Frame 6 image (hero)</span>
+            </div>
+            <p class="frame-number">Frame 6 · <span class="hero-tag">hero</span></p>
+            <p class="frame-title">Artist Story: displacement</p>
+            <p class="frame-caption">His story is not her story, but the shape of it — leaving the place that knows you, arriving where the language is wrong — rhymes.</p>
+          </div>
+
+          <div class="frame">
+            <div class="frame-image"><img src="images/s2-f07.png" alt="Frame 7 — The rhyme" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+              <span class="image-placeholder">Frame 7 image</span>
+            </div>
+            <p class="frame-number">Frame 7 · supporting</p>
+            <p class="frame-title">The rhyme</p>
+            <p class="frame-caption">She does not share his history, but she shares the feeling of being in-between two homes. The app has quietly made space for her to say so.</p>
+          </div>
+
+          <div class="frame">
+            <div class="frame-image"><img src="images/s2-f08.png" alt="Frame 8 — Leave a trace" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+              <span class="image-placeholder">Frame 8 image</span>
+            </div>
+            <p class="frame-number">Frame 8 · supporting</p>
+            <p class="frame-title">Leave a trace</p>
+            <p class="frame-caption">Three taps. One song. One phrase. No need to write a paragraph or explain to anyone.</p>
+          </div>
+
+          <div class="frame hero">
+            <div class="frame-image"><img src="images/s2-f09.png" alt="Frame 9 — Submit" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+              <span class="image-placeholder">Frame 9 image (hero)</span>
+            </div>
+            <p class="frame-number">Frame 9 · <span class="hero-tag">hero</span></p>
+            <p class="frame-title">Submit</p>
+            <p class="frame-caption">Her contribution does not demand an audience. It simply settles into the place — waiting for a stranger, one day, to recognise themselves in it.</p>
+          </div>
+
+          <div class="frame hero">
+            <div class="frame-image"><img src="images/s2-f10.png" alt="Frame 10 — Train arriving" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+              <span class="image-placeholder">Frame 10 image (hero)</span>
+            </div>
+            <p class="frame-number">Frame 10 · <span class="hero-tag">hero</span></p>
+            <p class="frame-title">Train arriving</p>
+            <p class="frame-caption">She has not met a single stranger tonight. But the station carries a small piece of her now — and she carries a small piece of someone else's home song back with her.</p>
+          </div>
+
+        </div>
+
+        <div class="goal-callout">
+          <h4>Experiential goal supported — Distributed belonging</h4>
+          <p>
+            Belonging is <em>deposited across the city</em> rather than anchored to a single group or friendship. Mei leaves a fragment of her cultural identity at Central Station; she takes away an Aboriginal-Australian artist's story. The exchange is asynchronous, asymmetric, low-pressure — exactly the quality the persona's frustrations (<em>"hearts aren't enough"</em>, <em>"where do I even start?"</em>) call for. Every station on her commute can hold a different cultural conversation, and she slowly becomes part of many small, overlapping place-communities without ever joining one.
+          </p>
+        </div>
+      </article>
+    </section>
+
+    <!-- ================================================
+         SECTION D — PARTS & HOW THEY CONNECT
+         ================================================ -->
+    <section class="section" id="section-d">
+      <header class="section-header">
+        <span class="section-letter">D</span>
+        <div>
+          <h2 class="section-title">The Parts &amp; How They Connect</h2>
+          <p class="section-subtitle">Places, sounds, people — and the three screens that link them</p>
+        </div>
+      </header>
+
+      <p class="section-intro">
+        City Echo has three kinds of parts — <strong>place-parts</strong> (Sydney nodes that hold soundscapes), <strong>sound-parts</strong> (tracks, traces, moods) and <strong>people-parts</strong> (anonymous users). They connect through a single interaction surface — the map — and three core screens.
+      </p>
+
+      <!-- Master collage -->
+      <figure class="collage">
+        <div class="collage-image">
+          <img src="images/parts-collage.png" alt="Sydney-map collage of City Echo parts" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+          <span class="image-placeholder">
+            <strong>Sydney-map collage</strong><br>
+            detective-pinboard composition · 5 place-pins · red-string user journeys · trace tags · 3 UI polaroids
+          </span>
+        </div>
+        <figcaption>
+          <strong>Figure D.1 — The Sydney-map collage.</strong>
+          Each red-thumbtacked pin is a place-part (UTS Library, Central Station, Newtown café, Bondi Beach, Chippendale Spice Alley); each red string is a user journey; each torn paper scrap is a trace tag left by an anonymous user. The three polaroids pinned around the edge are the app's key interfaces. <em>Caption: City Echo turns the city into a listening room — each place is a pin, each song is a thread, each stranger is a silent neighbour.</em>
+        </figcaption>
+      </figure>
+
+      <!-- Three key screens -->
+      <div class="screen-grid">
+
+        <article class="screen-card">
+          <div class="screen-image">
+            <img src="images/screen-map.png" alt="Map Discovery screen" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+            <span class="image-placeholder">Map Discovery mockup</span>
+          </div>
+          <h4 class="screen-title">1. Map Discovery</h4>
+          <p class="screen-purpose">Entry — makes the city's listening activity visible at a glance.</p>
+          <ul class="screen-callouts">
+            <li><strong>Pulse size</strong> = number of current listeners at each place</li>
+            <li><strong>Warm amber glow</strong> = active soundscape; grey = quiet hour</li>
+            <li><strong>Stylised map</strong>, not satellite — emotional geography, not navigation</li>
+            <li><strong>Proximity strip</strong> at bottom: one-tap entry to nearest active place</li>
+          </ul>
+        </article>
+
+        <article class="screen-card">
+          <div class="screen-image">
+            <img src="images/screen-music.png" alt="Music Discovery screen" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+            <span class="image-placeholder">Music Discovery mockup</span>
+          </div>
+          <h4 class="screen-title">2. Music Discovery</h4>
+          <p class="screen-purpose">Dive — lets the user inhabit a single place's soundscape.</p>
+          <ul class="screen-callouts">
+            <li><strong>Mood filter</strong> (focus / calm / lonely) changes the playlist — same place, different emotional weather</li>
+            <li><strong>"12 others listening here now"</strong> — ambient co-presence line, never a notification</li>
+            <li><strong>Horizontal trace row</strong> — Polaroids in a shoebox, not a feed</li>
+            <li><strong>"+ Leave a trace"</strong> button always visible, never pulsing — contribution invited, not pressured</li>
+          </ul>
+        </article>
+
+        <article class="screen-card">
+          <div class="screen-image">
+            <img src="images/screen-story.png" alt="Artist Story screen" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+            <span class="image-placeholder">Artist Story mockup</span>
+          </div>
+          <h4 class="screen-title">3. Artist Story</h4>
+          <p class="screen-purpose">Deepen — turns a song into a human migration narrative.</p>
+          <ul class="screen-callouts">
+            <li><strong>Bilingual toggle</strong> is top-level — language is treated as a user right</li>
+            <li><strong>Hand-drawn journey map</strong> visualises displacement, not just biography</li>
+            <li><strong>Artist-curated tracklist</strong> links the artist-part to a specific place-part</li>
+            <li><strong>"Leave a trace on her story"</strong> — traces can attach to a story, not only a place</li>
+          </ul>
+        </article>
+
+      </div>
+
+      <!-- Connection logic -->
+      <div class="connection-box">
+        <h4>How the three screens connect</h4>
+        <p class="connection-flow">
+          <span class="flow-step">Map Discovery</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-step">Music Discovery</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-step">Artist Story</span>
+        </p>
+        <p>
+          <strong>Zoom → in → deeper.</strong> Users always return to the map. Every pin on the collage opens to a Music Discovery screen; every trace tag was left from a Music Discovery screen; every artist-polaroid is accessible through an Artist Story screen.
+        </p>
+        <p>
+          <strong>Asymmetry of identity:</strong> artists are named; users are not. Named parts: places, artists. Anonymous parts: users (avatar + one-word traces only). This asymmetry is the connection rule that makes the whole system emotionally safe.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================================================
+         SECTION E — TECHNICAL BLUEPRINT
+         ================================================ -->
+    <section class="section" id="section-e">
+      <header class="section-header">
+        <span class="section-letter">E</span>
+        <div>
+          <h2 class="section-title">System (Technical) Blueprint</h2>
+          <p class="section-subtitle">Components, technologies, hierarchy of interfaces</p>
+        </div>
+      </header>
+
+      <p class="section-intro">
+        City Echo is organised into <strong>five layers</strong>, with inclusion infrastructure running as a cross-cutting band spanning all four upper layers. Three design principles constrain the stack: <em>ambient and low-pressure</em>, <em>anonymous by default</em>, and <em>place-first, not user-first</em>.
+      </p>
+
+      <!-- Master blueprint image -->
+      <figure class="blueprint">
+        <div class="blueprint-image">
+          <img src="images/blueprint-master.png" alt="Five-layer system blueprint" onerror="this.style.display='none';this.parentNode.classList.add('no-image');">
+          <span class="image-placeholder">
+            <strong>Five-layer system blueprint</strong><br>
+            Layers 1–4 stacked horizontally · Layer 5 (inclusion) as vertical band on the left · data-flow arrows between layers
+          </span>
+        </div>
+        <figcaption><strong>Figure E.1 — System blueprint.</strong> Warm amber = user-visible (Layer 1). Cool greys/blues = under-the-hood (Layers 2–4). Green = cross-cutting inclusion infrastructure (Layer 5).</figcaption>
+      </figure>
+
+      <!-- Layer table -->
+      <div class="layers">
+
+        <div class="layer-card">
+          <div class="layer-tag">Layer 1 · Presentation</div>
+          <h4 class="layer-title">User-facing interfaces</h4>
+          <ul>
+            <li><strong>iOS app</strong> — SwiftUI, iOS 17+</li>
+            <li><strong>Android app</strong> — Jetpack Compose, Kotlin</li>
+            <li><strong>Web companion</strong> — Next.js 15 (Artist Story deep-link pages)</li>
+            <li><strong>Ambient widget</strong> — home-screen "Near you" glance</li>
+          </ul>
+        </div>
+
+        <div class="layer-card">
+          <div class="layer-tag">Layer 2 · Device services</div>
+          <h4 class="layer-title">On-device logic</h4>
+          <ul>
+            <li><strong>Location</strong> — CoreLocation, FusedLocationProvider, geofence API</li>
+            <li><strong>Audio playback</strong> — Spotify SDK, Apple MusicKit, 30s preview fallback</li>
+            <li><strong>On-device trace composer</strong> — offline-capable, syncs on reconnect</li>
+            <li><strong>Ambient haptics</strong> — CoreHaptics / VibrationEffect (never intrusive)</li>
+            <li><strong>Local cache</strong> — Core Data / Room for offline commute use</li>
+          </ul>
+        </div>
+
+        <div class="layer-card">
+          <div class="layer-tag">Layer 3 · Application services</div>
+          <h4 class="layer-title">Backend APIs · Node.js + NestJS · AWS ECS Fargate</h4>
+          <ul>
+            <li><strong>Soundscape service</strong> — playlist + mood distribution + listener count per place</li>
+            <li><strong>Trace service</strong> — read/write traces, reactions, moderation hand-off</li>
+            <li><strong>Place registry</strong> — curated catalogue of recognised places + geofence defs</li>
+            <li><strong>Artist Story service</strong> — bilingual content, curated tracklists</li>
+            <li><strong>Identity service</strong> — anonymous accounts (avatar + language + region)</li>
+            <li><strong>Moderation service</strong> — automated + human queue for traces &amp; tags</li>
+            <li><strong>Live presence service</strong> — WebSocket "N listening now" counters</li>
+          </ul>
+        </div>
+
+        <div class="layer-card">
+          <div class="layer-tag">Layer 4 · Data &amp; integrations</div>
+          <h4 class="layer-title">Stores and external APIs</h4>
+          <ul>
+            <li><strong>PostgreSQL 16</strong> (AWS RDS) — places, users, traces, stories</li>
+            <li><strong>Redis</strong> (ElastiCache) — live counters, WebSocket sessions</li>
+            <li><strong>OpenSearch</strong> — moderation dashboard search</li>
+            <li><strong>AWS S3</strong> — story photos, hand-drawn journey maps, avatar pack</li>
+            <li><strong>Spotify &amp; Apple Music APIs</strong> — catalogue + playback rights</li>
+            <li><strong>Mapbox</strong> — stylised tiles + geocoding (chosen for amber styling)</li>
+            <li><strong>PostHog (self-hosted)</strong> — privacy-preserving analytics</li>
+          </ul>
+        </div>
+
+        <div class="layer-card inclusion-layer">
+          <div class="layer-tag inclusion-tag">Layer 5 · Inclusion infrastructure · cross-cutting</div>
+          <h4 class="layer-title">Culturally and linguistically safe substrate</h4>
+          <ul>
+            <li><strong>Bilingual content pipeline</strong> — every story, tag, UI string stored with language variants</li>
+            <li><strong>"International students' picks" seed dataset</strong> — prevents cold-start bias toward Anglo-Australian indie</li>
+            <li><strong>Moderation pipeline</strong> — three-stage: automated → cultural-sensitivity → human review by trained community moderators</li>
+            <li><strong>Language-first onboarding</strong> — language picked before region; UI defaults to chosen language, not device locale</li>
+            <li><strong>Accessibility layer</strong> — VoiceOver / TalkBack audits, no text-in-image</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Hierarchy of interfaces -->
+      <div class="hierarchy-box">
+        <h4>Hierarchy of interfaces (rubric requirement)</h4>
+        <ol class="hierarchy-list">
+          <li><strong>Tier 1 — Primary:</strong> Map Discovery (home screen on mobile)</li>
+          <li><strong>Tier 2 — Situated:</strong> Music Discovery (place-scoped) · Artist Story (song/story-scoped)</li>
+          <li><strong>Tier 3 — Creation:</strong> Trace Composer</li>
+          <li><strong>Tier 4 — Ambient:</strong> Home-screen widget · Lockscreen live-activity · Rate-limited push (max 1/place/day)</li>
+          <li><strong>Tier 5 — Share-out:</strong> Web Artist Story (read-only public URL) · Deep-links for WeChat / WhatsApp / email</li>
+        </ol>
+        <p class="hierarchy-rule"><strong>Rule:</strong> Users can always return to Tier 1. Tiers 4 &amp; 5 do not require the app to be open.</p>
+      </div>
+
+      <!-- Deliberate omissions -->
+      <div class="omissions-box">
+        <h4>What the blueprint deliberately omits</h4>
+        <ul>
+          <li><strong>No DMs or chat</strong> — breaks <em>ambient, low-pressure</em></li>
+          <li><strong>No friend / follow graph</strong> — breaks <em>anonymous by default</em></li>
+          <li><strong>No algorithmic For-You feed</strong> — breaks <em>place-first</em>; the map is the feed</li>
+          <li><strong>No user profile pages</strong> — traces are the contribution unit, not identities</li>
+          <li><strong>No leaderboards</strong> — gamification would reintroduce the social-performance pressure the design exists to remove</li>
+        </ul>
+        <p><em>Absences are design decisions. The blueprint is as much about what we refuse to build as what we do build.</em></p>
+      </div>
+    </section>
+
+    <!-- ================================================
+         GEN AI DECLARATION
+         ================================================ -->
+    <section class="section declaration" id="declaration">
+      <header class="section-header">
+        <span class="section-letter">✺</span>
+        <div>
+          <h2 class="section-title">Generative AI Declaration</h2>
+          <p class="section-subtitle">As required by UTS academic integrity policy</p>
+        </div>
+      </header>
+      <ul>
+        <li><strong>Section C storyboard visuals</strong> — scene prompts hand-written by team; images generated via [tool TBD: Midjourney / DALL-E], then composited into frames</li>
+        <li><strong>Section D Sydney-map collage</strong> — base map and pin illustrations generated via [tool TBD]; final composition assembled by team</li>
+        <li><strong>Section D UI mockups</strong> — produced by team (design tool) with AI assistance for imagery placeholders only</li>
+        <li><strong>Section E master blueprint</strong> — structural diagram produced by team; illustrative elements refined with AI assistance</li>
+        <li><strong>Written text</strong> — authored by team; AI used for proofreading and light copy-editing only</li>
+        <li><strong>Creative thinking</strong> — not AI-generated; concept, persona anchoring, scenario arcs, and architectural decisions authored by the team based on Assignment 2 user research</li>
+      </ul>
+    </section>
+
+  </div>
+</body>
+</html>

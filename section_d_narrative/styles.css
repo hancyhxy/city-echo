@@ -1,0 +1,865 @@
+/* ============================================================
+   Section D · City Echo — Scrollytelling
+   Stylesheet
+   Visual language continuity with storyboard1/2:
+   - paper cream background (#f5ead6)
+   - tone-aware signal color (--signal): amber for Mei, deep rose-red for Qing,
+     brick-red for finale — keeps pin/rail/counter/now-playing accent in the
+     same hue family as the page background tone
+   - editorial serif headings (Source Serif / Tiempos fallback)
+   ============================================================ */
+
+:root {
+  --paper:        #f5ead6;
+  --paper-deep:   #ebdcb8;
+  --ink:          #2a2118;
+  --ink-soft:     #5b4a36;
+  --ink-faint:    #8a7a60;
+  --amber:        #d97a2c;
+  --amber-warm:   #f0a050;
+  --amber-glow:   rgba(217, 122, 44, 0.45);
+  --rust:         #a13b22;
+  --rust-soft:    #c25a3a;
+  --serif:        'Source Serif Pro', 'Tiempos', 'Georgia', 'Times New Roman', serif;
+  --sans:         'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  --max-width:    1400px;
+
+  /* --tone-bg drives chromatic chaptering. JS sets body[data-tone].
+     The default value matches the neutral state. */
+  --tone-bg:      #f5ead6;
+  --tone-accent:  rgba(217, 122, 44, 0.0);
+
+  /* --signal is the tone-aware accent for pins / rail / counter / now-playing.
+     Defaults to amber for the neutral opener; each body[data-tone] block below
+     re-defines these so all signal-bearing elements stay in the chapter's hue. */
+  --signal:       #d97a2c;
+  --signal-warm:  #f0a050;
+  --signal-glow:  rgba(217, 122, 44, 0.45);
+}
+
+/* Three-step warm chromatic arc — story builds heat as it progresses.
+   Mei (cream) → Qing (rose) → Finale (coral). Each tone matches its basemap. */
+
+/* Mei = warm honey-cream (UTS Library, weekday afternoon, amber warmth)
+   signal = amber — kept identical to storyboard PNG asset visual language */
+body[data-tone="mei"] {
+  --tone-bg:     #f0e3c8;
+  --tone-accent: rgba(217, 122, 44, 0.06);
+  --signal:      #d97a2c;
+  --signal-warm: #f0a050;
+  --signal-glow: rgba(217, 122, 44, 0.45);
+}
+
+/* Qing = dusty rose (between two cultures — warm-but-lonely magic hour)
+   signal = deep rose-red, same hue family as the rose-tinted basemap */
+body[data-tone="qing"] {
+  --tone-bg:     #f3d6d2;
+  --tone-accent: rgba(193, 122, 122, 0.08);
+  --signal:      #b54a55;
+  --signal-warm: #c87078;
+  --signal-glow: rgba(181, 74, 85, 0.40);
+}
+
+/* Finale = deep coral (two stories converge — heat doubled, warmth peaked)
+   signal = brick-red, bridges deep coral toward the outro's #5a1414 crimson */
+body[data-tone="finale"] {
+  --tone-bg:     #ec9a83;
+  --tone-accent: rgba(180, 75, 50, 0.12);
+  --signal:      #a8362c;
+  --signal-warm: #c0554a;
+  --signal-glow: rgba(168, 54, 44, 0.42);
+}
+
+/* Neutral — only used by the opener before scrollytelling begins.
+   signal stays amber to match the paper-cream paper-and-storyboard aesthetic. */
+body[data-tone="neutral"] {
+  --tone-bg:     #f5ead6;
+  --tone-accent: rgba(217, 122, 44, 0.0);
+  --signal:      #d97a2c;
+  --signal-warm: #f0a050;
+  --signal-glow: rgba(217, 122, 44, 0.45);
+}
+
+/* -----------------------------
+   Base
+   ----------------------------- */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--tone-bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 1.6s cubic-bezier(.5, .05, .2, 1);
+  /* subtle paper grain — stays the same across tones */
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(184,154,106,0.08) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(184,154,106,0.06) 0%, transparent 40%);
+}
+
+em { font-style: italic; color: var(--ink-soft); }
+strong { color: var(--ink); }
+
+/* -----------------------------
+   Opener (full-viewport hero)
+   ----------------------------- */
+.opener {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 5vw;
+  position: relative;
+}
+
+.eyebrow {
+  font-family: var(--sans);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 32px;
+}
+
+.opener-title {
+  font-family: var(--serif);
+  font-size: clamp(48px, 8vw, 110px);
+  font-weight: 600;
+  line-height: 1.05;
+  margin: 0 0 32px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.opener-title em {
+  font-style: italic;
+  color: var(--signal);
+}
+
+.opener-deck {
+  font-family: var(--serif);
+  font-size: clamp(18px, 2vw, 24px);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 640px;
+  margin: 0 0 80px;
+}
+
+.opener-scroll-hint {
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  position: absolute;
+  bottom: 48px;
+  animation: bob 2.2s ease-in-out infinite;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50%      { transform: translateY(8px); opacity: 1; }
+}
+
+/* -----------------------------
+   Scrollytelling layout — IMMERSIVE FULL-VIEWPORT
+   The map is fixed to the viewport (always visible behind everything).
+   Steps scroll on top as floating cards on the right side.
+   ----------------------------- */
+.scrolly {
+  position: relative;
+  /* No grid here anymore; map and steps are positioned independently */
+}
+
+/* Map: fixed full-viewport behind the scrolling steps */
+.map-sticky {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  /* Fade in/out tied to the .scrolly section's visibility — JS-driven */
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.map-sticky.is-visible {
+  opacity: 1;
+}
+
+.map-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--tone-bg);
+  overflow: hidden;
+  transition: background-color 1.6s cubic-bezier(.5, .05, .2, 1);
+  /* No more border-radius / shadow — it's now a full-bleed canvas */
+}
+
+/* -----------------------------
+   Basemap stage — two layered <img> + rail SVG overlay.
+   The whole stage receives JS-driven transform (Ken Burns pan + zoom).
+   Pin-layer and trace-layer (siblings in HTML) receive the SAME transform
+   in JS so they stay anchored to map features as the camera moves.
+   ----------------------------- */
+.basemap-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  transform-origin: center center;
+  transition: transform 1.6s cubic-bezier(.5, .05, .2, 1);
+  will-change: transform;
+}
+
+.basemap-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.basemap-img.is-active {
+  opacity: 1;
+}
+
+/* Rail line overlay — sits on top of basemap, in normalized 0-100 coords */
+.rail-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  /* color drives stroke="currentColor" on #rail-line — keeps the rail in
+     the current chapter's signal hue (deep rose-red in Qing, brick-red in finale) */
+  color: var(--signal);
+  transition: opacity 0.8s ease, color 1.2s ease;
+}
+.basemap-stage.show-rail .rail-overlay { opacity: 1; }
+
+#rail-line {
+  stroke-dasharray: 1.5 1;
+  stroke-dashoffset: 60;
+  transition: stroke-dashoffset 2.4s ease-out;
+}
+.basemap-stage.show-rail #rail-line { stroke-dashoffset: 0; }
+
+/* -----------------------------
+   Pins (5 place-pins, JS-driven state)
+   ----------------------------- */
+.pin-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.pin.is-active,
+.pin.is-anchored {
+  opacity: 1;
+}
+
+.pin-dot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--ink-faint);
+  border: 2px solid var(--paper);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  transition: background 0.6s ease, box-shadow 0.6s ease, width 0.4s ease, height 0.4s ease;
+  z-index: 3;
+}
+
+.pin-pulse {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--signal-warm);
+  opacity: 0;
+  z-index: 2;
+}
+
+.pin-label {
+  position: absolute;
+  left: 14px;
+  top: -6px;
+  font-family: var(--serif);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  text-shadow: 0 1px 0 var(--paper), 0 0 4px var(--paper);
+  z-index: 4;
+}
+
+/* States */
+.pin.is-active .pin-dot {
+  background: var(--signal);
+  box-shadow: 0 0 0 4px var(--signal-glow), 0 0 24px var(--signal-glow);
+}
+.pin.is-active .pin-pulse {
+  animation: pulse 2.4s ease-out infinite;
+}
+.pin.is-active .pin-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.pin.is-anchored .pin-dot {
+  background: var(--signal);
+  width: 18px;
+  height: 18px;
+  box-shadow: 0 0 0 6px var(--signal-glow), 0 0 32px var(--signal-glow);
+}
+.pin.is-anchored .pin-label {
+  opacity: 1;
+  transform: translateX(0);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+@keyframes pulse {
+  0%   { opacity: 0.6; width: 14px; height: 14px; }
+  100% { opacity: 0;   width: 64px; height: 64px; }
+}
+
+/* -----------------------------
+   Pin-layer & trace-layer ride the basemap transform via JS.
+   transform-origin/transition mirrors .basemap-stage so layers stay synced.
+   ----------------------------- */
+.pin-layer,
+.trace-layer {
+  transform-origin: center center;
+  transition: transform 1.6s cubic-bezier(.5, .05, .2, 1);
+  will-change: transform;
+}
+
+/* -----------------------------
+   Trace tags (torn-paper snippets)
+   ----------------------------- */
+.trace-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.trace {
+  position: absolute;
+  transform: translate(-50%, -50%) rotate(-3deg);
+  background: #fff8e8;
+  padding: 8px 14px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--ink-soft);
+  max-width: 220px;
+  box-shadow:
+    0 2px 6px rgba(58,42,22,0.18),
+    inset 0 0 0 1px rgba(184,154,106,0.3);
+  /* torn-paper jagged edge via clip-path */
+  clip-path: polygon(
+    2% 6%, 18% 0%, 38% 5%, 58% 1%, 80% 6%, 96% 2%, 100% 18%,
+    98% 38%, 100% 60%, 96% 82%, 100% 96%, 80% 100%, 60% 96%,
+    40% 100%, 18% 96%, 2% 100%, 0% 80%, 4% 60%, 0% 38%, 2% 18%
+  );
+  opacity: 0;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  z-index: 5;
+}
+
+.trace--qing { transform: translate(-50%, -50%) rotate(2deg); }
+
+/* Protagonist traces — Mei's and Qing's own contributions.
+   Tone-aware: colour tracks the chapter's --signal, so the trace warms
+   from amber (Mei chapter) through rose (Qing chapter) to brick-red
+   (finale) as the reader scrolls. Reads as the emotional through-line,
+   distinct from the cream ambient notes beneath. */
+.trace--mei,
+.trace--qing {
+  color: var(--signal);
+  background: color-mix(in srgb, var(--signal) 15%, #fff8e8);
+  box-shadow:
+    0 2px 6px rgba(58,42,22,0.22),
+    inset 0 0 0 1px color-mix(in srgb, var(--signal) 35%, transparent);
+  font-weight: 500;
+  transition:
+    color 0.9s ease,
+    background 0.9s ease,
+    box-shadow 0.9s ease,
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+.trace.is-visible {
+  opacity: 1;
+}
+.trace--mei.is-visible { transform: translate(-50%, -50%) rotate(-3deg) translateY(-4px); }
+.trace--qing.is-visible { transform: translate(-50%, -50%) rotate(2deg) translateY(-4px); }
+
+/* -----------------------------
+   Ambient echo notes — anonymous crowd memories pinned near hot places.
+   Quieter and smaller than curated traces. Permanently visible while the
+   scrolly section is in view; ride the same basemap transform as
+   pin-layer / trace-layer for Ken Burns zoom consistency.
+   Density is intentional: Central cluster (8 notes) > UTS/Burwood (2 each) >
+   nothing elsewhere — the map shows WHERE belonging sediments.
+   ----------------------------- */
+.echo-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transform-origin: center center;
+  will-change: transform;
+  transition: transform 1.6s cubic-bezier(.5, .05, .2, 1);
+}
+
+.echo-note {
+  position: absolute;
+  transform: translate(-50%, -50%) rotate(-2deg);
+  background: #fff8e8;
+  padding: 5px 10px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 11px;
+  line-height: 1.3;
+  color: var(--ink-faint);
+  max-width: 180px;
+  box-shadow:
+    0 1px 3px rgba(58,42,22,0.12),
+    inset 0 0 0 1px rgba(184,154,106,0.25);
+  clip-path: polygon(
+    2% 6%, 18% 0%, 38% 5%, 58% 1%, 80% 6%, 96% 2%, 100% 18%,
+    98% 38%, 100% 60%, 96% 82%, 100% 96%, 80% 100%, 60% 96%,
+    40% 100%, 18% 96%, 2% 100%, 0% 80%, 4% 60%, 0% 38%, 2% 18%
+  );
+  z-index: 4;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+/* Per-note reveal — JS adds .is-active to the exact set of notes listed
+   in state.echoNotes for the current step. Full opacity so each pair
+   reads as foreground story beats, not background ambience. Step 8
+   (finale) reveals all 10 notes at their data-finale coordinates
+   (fanned around the story card). */
+.echo-note.is-active {
+  opacity: 1;
+}
+
+/* Rotation variants — break the grid feel within each cluster */
+.echo-note:nth-child(2n)   { transform: translate(-50%, -50%) rotate(2deg); }
+.echo-note:nth-child(3n)   { transform: translate(-50%, -50%) rotate(-4deg); }
+.echo-note:nth-child(4n+1) { transform: translate(-50%, -50%) rotate(3deg); }
+
+/* -----------------------------
+   Counter (top-right of map)
+   ----------------------------- */
+.map-counter {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  text-align: right;
+  font-family: var(--serif);
+  color: var(--ink-soft);
+  z-index: 10;
+}
+.counter-num {
+  display: block;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--signal);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.4s ease;
+}
+.counter-lbl {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 2px;
+}
+
+/* -----------------------------
+   Sticky double-card narrative paradigm
+   ------------------------------------------------------------
+   - 3 .story-card elements are stickily anchored to fixed positions
+     in the viewport (Mei right, Qing left, finale centre).
+   - 8 .step-detector blocks live in document flow as invisible scroll
+     regions. IntersectionObserver fires on each as user scrolls.
+   - JS reads STATES[step] and writes meta/title/body content into
+     the active card via a 0.45s opacity cross-fade.
+   ----------------------------- */
+
+.steps {
+  position: relative;
+  z-index: 10;            /* above the fixed map (z-index 1) */
+}
+
+/* Invisible scroll regions — each one gives the browser ~90vh of scroll
+   to traverse before firing the next step. No visible content. */
+.step-detector {
+  min-height: 90vh;
+  pointer-events: none;
+}
+
+/* Story cards — fixed to the viewport, content swapped per step.
+   Default state: hidden (opacity 0, no pointer-events) until JS adds
+   .is-active for the matching chapter. */
+.story-card {
+  position: fixed;
+  top: 50%;
+  width: 38vw;
+  max-width: 520px;
+  z-index: 12;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.7s ease;
+}
+.story-card.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Side-specific positioning */
+.story-card--mei {
+  right: 4vw;
+  transform: translateY(-50%);
+}
+.story-card--qing {
+  left: 4vw;
+  transform: translateY(-50%);
+}
+.story-card--finale {
+  left: 50%;
+  width: 44vw;
+  max-width: 620px;
+  transform: translate(-50%, -50%);
+}
+
+/* The inner card — semi-transparent paper with backdrop blur, sits on map.
+   .is-fading triggers the opacity drop used by the cross-fade swap. */
+.story-card__inner {
+  background: rgba(245, 234, 214, 0.78);
+  backdrop-filter: blur(14px) saturate(1.05);
+  -webkit-backdrop-filter: blur(14px) saturate(1.05);
+  padding: 36px 36px 32px;
+  border-radius: 4px;
+  box-shadow:
+    0 1px 2px rgba(58,42,22,0.06),
+    0 18px 40px rgba(58,42,22,0.16);
+  border: 1px solid rgba(184, 154, 106, 0.22);
+  transition: opacity 0.45s ease, background-color 1.6s ease, border-color 1.6s ease;
+}
+.story-card.is-fading .story-card__inner {
+  opacity: 0;
+}
+
+/* Tone-aware card surface — same hue family as the page tone, but pulled
+   toward off-white and dialled down on opacity so the card lifts off the
+   map rather than blending into it. The hint of tone is enough to signal
+   chapter; readability comes first. */
+body[data-tone="mei"]    .story-card__inner { background: rgba(252, 246, 232, 0.72); border-color: rgba(217, 122, 44,  0.18); }
+body[data-tone="qing"]   .story-card__inner { background: rgba(252, 240, 238, 0.72); border-color: rgba(193, 122, 122, 0.22); }
+body[data-tone="finale"] .story-card__inner { background: rgba(252, 224, 212, 0.74); border-color: rgba(180, 75, 50,   0.32); }
+
+/* Typography — kept identical to the prior .step-* rules so the visual
+   feel doesn't shift when the architecture changes. */
+.story-meta {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--signal);
+  transition: color 0.6s ease;
+  margin: 0 0 14px;
+}
+
+.story-title {
+  font-family: var(--serif);
+  font-size: clamp(26px, 2.6vw, 38px);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ink);
+  margin: 0 0 18px;
+  letter-spacing: -0.005em;
+}
+
+.story-body {
+  font-family: var(--serif);
+  font-size: clamp(15px, 1.15vw, 17px);
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.story-body p {
+  margin: 0 0 14px;
+}
+.story-body p:last-child { margin-bottom: 0; }
+
+.story-body p.quiet {
+  font-size: 14px;
+  color: var(--ink-faint);
+  border-left: 2px solid var(--signal-warm);
+  padding-left: 14px;
+  margin-top: 20px;
+}
+
+.step--transition .step-meta {
+  color: var(--rust);
+}
+
+/* -----------------------------
+   Outro — final beat. Full-bleed deep crimson reveal: white "City Echo"
+   wordmark and a single pulsing red dot. The chromatic arc lands here:
+   cream → rose → coral → CRIMSON. The dot is the heartbeat of the city
+   that's been listening the whole time.
+   ----------------------------- */
+.outro {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5vw;
+  background: #5a1414;            /* oxblood / deep crimson */
+  /* Full-bleed override: ignore body's tone background entirely */
+  position: relative;
+  z-index: 50;                    /* above any leftover map */
+}
+
+.logo-card {
+  text-align: center;
+}
+
+/* Staggered reveal — the three children enter in sequence (dot → title →
+   subtitle) when the outro scrolls into view. Total choreography is ~2.4s,
+   which aligns with one full heartbeat cycle so the subtitle lands just as
+   the first pulse fires. */
+.logo-mark,
+.logo-name,
+.logo-tag {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 1.1s ease, transform 1.1s ease;
+}
+
+/* Per-child delays — cascade timing */
+.logo-mark { transition-delay: 0.1s; }
+.logo-name { transition-delay: 0.8s; }
+.logo-tag  { transition-delay: 1.4s; }
+
+.outro.is-visible .logo-mark,
+.outro.is-visible .logo-name,
+.outro.is-visible .logo-tag {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* The white heartbeat dot — single circle pulsing on deep crimson.
+   Pulse animation stays paused until .outro.is-visible so the user sees the
+   heartbeat START, not catch it mid-cycle on scroll-in. */
+.logo-mark {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  margin: 0 auto 32px;
+  font-size: 0;                   /* hide the existing ◉ glyph; use the box itself */
+  line-height: 0;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6);
+  animation: heartbeat 2.4s ease-out infinite;
+  animation-play-state: paused;
+}
+
+.outro.is-visible .logo-mark {
+  animation-play-state: running;
+}
+
+@keyframes heartbeat {
+  0%   { box-shadow: 0 0 0 0    rgba(255, 255, 255, 0.7),
+                     0 0 12px   rgba(255, 255, 255, 0.6); }
+  60%  { box-shadow: 0 0 0 22px rgba(255, 255, 255, 0.0),
+                     0 0 24px   rgba(255, 255, 255, 0.4); }
+  100% { box-shadow: 0 0 0 0    rgba(255, 255, 255, 0.0),
+                     0 0 12px   rgba(255, 255, 255, 0.6); }
+}
+
+.logo-name {
+  font-family: var(--serif);
+  font-size: clamp(48px, 6vw, 80px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 16px;
+  color: #ffffff;                 /* pure white on crimson */
+}
+
+.logo-tag {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(16px, 1.6vw, 20px);
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+/* -----------------------------
+   Now-playing card (fixed bottom-right, content updated per step)
+   Visual continuity with map-counter; serves as a "what they're hearing" beat.
+   ----------------------------- */
+.now-playing {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px 12px 14px;
+  /* Tone-aware off-white surface — overridden per body[data-tone] below.
+     Default matches the neutral / mei chapter look. */
+  background: rgba(252, 246, 232, 0.78);
+  backdrop-filter: blur(14px) saturate(1.05);
+  -webkit-backdrop-filter: blur(14px) saturate(1.05);
+  border: 1px solid rgba(184, 154, 106, 0.45);
+  border-radius: 999px;
+  box-shadow:
+    0 1px 2px rgba(58,42,22,0.08),
+    0 8px 22px rgba(58,42,22,0.14);
+  font-family: var(--serif);
+  z-index: 100;
+  opacity: 0.4;
+  transform: translateY(0);
+  transition: opacity 0.5s ease, transform 0.5s ease,
+              background 1.6s ease, border-color 1.6s ease;
+  pointer-events: none;
+}
+
+/* Tone-aware now-playing surface — same hue logic as .story-card__inner */
+body[data-tone="qing"]   .now-playing { background: rgba(252, 240, 238, 0.78); border-color: rgba(193, 122, 122, 0.40); }
+body[data-tone="finale"] .now-playing { background: rgba(252, 224, 212, 0.80); border-color: rgba(180, 75, 50,   0.45); }
+
+.now-playing.is-active {
+  opacity: 1;
+}
+
+.np-icon {
+  font-size: 20px;
+  color: var(--signal);
+  line-height: 1;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  text-align: center;
+  border-radius: 50%;
+  /* Faint tinted halo behind the ♪ glyph — picks up current chapter's signal */
+  background: var(--signal-glow);
+  padding-top: 1px;
+  flex-shrink: 0;
+  transition: color 0.6s ease, background 0.6s ease;
+}
+
+.now-playing.is-active .np-icon {
+  animation: np-pulse 2s ease-in-out infinite;
+}
+
+/* Pulse uses --signal-glow (semi-transparent) so the breathing halo stays
+   gentle and follows the current chapter's signal hue. */
+@keyframes np-pulse {
+  0%, 100% { box-shadow: 0 0 0 0    transparent; }
+  50%      { box-shadow: 0 0 0 6px  var(--signal-glow); }
+}
+
+.np-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.np-who {
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-family: var(--sans);
+  transition: color 0.4s ease;
+}
+
+.np-track {
+  margin: 0;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--ink);
+  white-space: nowrap;
+  transition: color 0.4s ease;
+}
+
+.now-playing:not(.is-active) .np-track { color: var(--ink-faint); }
+
+/* -----------------------------
+   Responsive — narrow screens: card spans more width, map stays full-bleed
+   ----------------------------- */
+@media (max-width: 900px) {
+  /* On narrow screens, every story-card collapses to centred + full width */
+  .story-card,
+  .story-card--mei,
+  .story-card--qing,
+  .story-card--finale {
+    left: 50%;
+    right: auto;
+    width: 92vw;
+    max-width: 100%;
+    transform: translate(-50%, -50%);
+  }
+  .story-card__inner {
+    padding: 24px 22px;
+  }
+  .step-detector {
+    min-height: 80vh;
+  }
+  .opener-title {
+    font-size: clamp(40px, 11vw, 72px);
+  }
+  .now-playing {
+    bottom: 16px;
+    right: 16px;
+    padding: 10px 14px 10px 12px;
+  }
+}

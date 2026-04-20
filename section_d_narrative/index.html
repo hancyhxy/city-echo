@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Section D — How belonging is pinned across the city · City Echo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       OPENER (full viewport, before scrollytelling begins)
+       ============================================================ -->
+  <header class="opener">
+    <p class="eyebrow">Ideation Document · Section D</p>
+    <h1 class="opener-title">
+      The city <em>is</em> listening.
+    </h1>
+    <p class="opener-deck">
+      How <strong>belonging</strong> gets pinned across Sydney — one place,<br />
+      one song, one stranger at a time. Two commutes, one shared room.
+    </p>
+    <p class="opener-scroll-hint">scroll ↓</p>
+  </header>
+
+  <!-- ============================================================
+       SCROLLYTELLING — full-bleed fixed map underneath, narrative cards
+       float on the right and scroll over the map
+       ============================================================ -->
+  <main class="scrolly">
+
+    <!-- Fixed full-viewport map (CSS makes this position:fixed; visibility
+         controlled by .is-visible class set when .scrolly enters viewport) -->
+    <aside class="map-sticky" aria-label="Map of City Echo place-pins across Sydney">
+      <div class="map-frame">
+
+        <!-- Three watercolour basemap layers, one per chapter:
+             - cbd (sepia honey)  → Mei chapter
+             - wide (dusty rose)  → Qing chapter
+             - finale (coral)     → Step 8 convergence
+             Ken Burns transform applied via JS per step. -->
+        <div class="basemap-stage" aria-hidden="true">
+          <img src="map-cbd.png"    alt="" class="basemap-img basemap-img--cbd    is-active" data-map="cbd"    />
+          <img src="map-wide.png"   alt="" class="basemap-img basemap-img--wide"              data-map="wide"   />
+          <img src="map-finale.png" alt="" class="basemap-img basemap-img--finale"            data-map="finale" />
+
+          <!-- Rail line overlay (drawn on top of basemap, follows the same transform via parent stage) -->
+          <svg class="rail-overlay" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <!-- Burwood → Strathfield → Redfern → Central → Town Hall → Wynyard
+                 coordinates expressed in 0-100 of the WIDE map's natural extent -->
+            <path id="rail-line"
+                  d="M 17,46 L 30,46 L 45,48 L 58,48 L 64,42 L 70,38"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="0.5"
+                  stroke-dasharray="1.5 1"
+                  stroke-linecap="round"
+                  vector-effect="non-scaling-stroke" />
+          </svg>
+        </div>
+
+        <!-- Pin overlay (5 place-pins). Each pin carries TWO coordinate sets:
+             one for the CBD-zoom map, one for the wide map. JS picks the right
+             one based on the active basemap, and pins ride the same transform
+             as the basemap (so Ken Burns pan/zoom keeps pins anchored). -->
+        <div class="pin-layer">
+          <!-- Mei pins (in both maps) -->
+          <div class="pin pin--uts"     data-pin="uts"     data-cbd-x="44" data-cbd-y="64" data-wide-x="56.5" data-wide-y="58" data-finale-x="56.5" data-finale-y="58">
+            <span class="pin-dot"></span>
+            <span class="pin-pulse"></span>
+            <span class="pin-label">UTS Library</span>
+          </div>
+
+          <div class="pin pin--spice"   data-pin="spice"   data-cbd-x="43" data-cbd-y="66" data-wide-x="56" data-wide-y="60" data-finale-x="56" data-finale-y="60">
+            <span class="pin-dot"></span>
+            <span class="pin-pulse"></span>
+            <span class="pin-label">Spice Alley</span>
+          </div>
+
+          <div class="pin pin--central" data-pin="central" data-cbd-x="48" data-cbd-y="60" data-wide-x="58" data-wide-y="56" data-finale-x="58" data-finale-y="56">
+            <span class="pin-dot"></span>
+            <span class="pin-pulse"></span>
+            <span class="pin-label">Central</span>
+          </div>
+
+          <!-- Qing pins (Burwood is wide/finale only; Wynyard exists in both but at very different positions) -->
+          <div class="pin pin--burwood" data-pin="burwood" data-cbd-x=""    data-cbd-y=""   data-wide-x="17" data-wide-y="46" data-finale-x="17" data-finale-y="46">
+            <span class="pin-dot"></span>
+            <span class="pin-pulse"></span>
+            <span class="pin-label">Burwood</span>
+          </div>
+
+          <div class="pin pin--wynyard" data-pin="wynyard" data-cbd-x="50" data-cbd-y="50" data-wide-x="70" data-wide-y="38" data-finale-x="70" data-finale-y="38">
+            <span class="pin-dot"></span>
+            <span class="pin-pulse"></span>
+            <span class="pin-label">Wynyard</span>
+          </div>
+        </div>
+
+        <!-- Trace tags (torn-paper snippets). Like pins, they carry two
+             coordinate sets and ride the basemap transform. -->
+        <div class="trace-layer">
+          <div class="trace trace--mei"  data-trace="mei"  data-cbd-x="32" data-cbd-y="55" data-wide-x="49" data-wide-y="50" data-finale-x="49" data-finale-y="50">
+            "first thing that's helped me<br/>write in Mandarin all week"
+          </div>
+          <div class="trace trace--qing" data-trace="qing" data-cbd-x="56" data-cbd-y="42" data-wide-x="60" data-wide-y="42" data-finale-x="60" data-finale-y="42">
+            "Mandarin is my first language<br/>but this song held me anyway"
+          </div>
+        </div>
+
+        <!-- Ambient echo notes — anonymous song memories from the crowd.
+             Permanently visible once .scrolly is in view. Ride the same
+             basemap transform as pins/traces; positions are tuned per basemap.
+             Density is NOT uniform: Central Station is a dense cluster (8),
+             UTS and Burwood get small clusters (2 each), and other pins are
+             deliberately left empty so the map reads "where belonging sediments". -->
+        <div class="echo-layer">
+
+          <!-- Central Station pool (4 notes, cen-1..4). cbd/wide coords near
+               Central; finale coords fan to the right column, outside the
+               centred finale story-card rectangle. -->
+          <div class="echo-note" data-echo="cen-1" data-cbd-x="47" data-cbd-y="54" data-wide-x="55" data-wide-y="52" data-finale-x="82" data-finale-y="40">"missed the last train and this played"</div>
+          <div class="echo-note" data-echo="cen-2" data-cbd-x="46" data-cbd-y="63" data-wide-x="55" data-wide-y="60" data-finale-x="85" data-finale-y="55">"Platform 18. goodbye song."</div>
+          <div class="echo-note" data-echo="cen-3" data-cbd-x="53" data-cbd-y="64" data-wide-x="62" data-wide-y="59" data-finale-x="80" data-finale-y="70">"six years of this commute, still this song"</div>
+          <div class="echo-note" data-echo="cen-4" data-cbd-x="52" data-cbd-y="53" data-wide-x="61" data-wide-y="52" data-finale-x="88" data-finale-y="25">"delayed 40 min. thank god for this track."</div>
+
+          <!-- UTS Library pool (4 notes, uts-1..4). cbd/wide coords near UTS;
+               finale coords fan to top and bottom bands of the fanout layout.
+               Steps 2 and 3 each reveal a different pair so scrolling through
+               Mei's chapter never repeats the same two voices. -->
+          <div class="echo-note" data-echo="uts-1" data-cbd-x="41" data-cbd-y="68" data-wide-x="54" data-wide-y="61" data-finale-x="18" data-finale-y="22">"studied for finals here three semesters in a row"</div>
+          <div class="echo-note" data-echo="uts-2" data-cbd-x="47" data-cbd-y="62" data-wide-x="58" data-wide-y="57" data-finale-x="38" data-finale-y="18">"level 5, window seat. my corner."</div>
+          <div class="echo-note" data-echo="uts-3" data-cbd-x="42" data-cbd-y="60" data-wide-x="55" data-wide-y="56" data-finale-x="22" data-finale-y="85">"got my first HD here. couldn't even text anyone."</div>
+          <div class="echo-note" data-echo="uts-4" data-cbd-x="49" data-cbd-y="67" data-wide-x="58" data-wide-y="60" data-finale-x="42" data-finale-y="82">"4pm sunlight on desk 7. my favourite."</div>
+
+          <!-- Burwood pool (2 notes, bur-1..2). cbd empty (off-map); wide
+               coords near Burwood; finale coords on the left column. -->
+          <div class="echo-note" data-echo="bur-1" data-cbd-x="" data-cbd-y="" data-wide-x="14" data-wide-y="48" data-finale-x="12" data-finale-y="45">"Westfield food court, 3pm, this on repeat"</div>
+          <div class="echo-note" data-echo="bur-2" data-cbd-x="" data-cbd-y="" data-wide-x="20" data-wide-y="44" data-finale-x="15" data-finale-y="62">"Mum's voice note played over this song"</div>
+
+        </div>
+
+        <!-- Ambient counter (top-right corner of map) -->
+        <div class="map-counter" data-counter>
+          <span class="counter-num">0</span>
+          <span class="counter-lbl">listening across the city</span>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- Scrolling layer:
+         3 sticky story-cards (one per chapter) hold the visible narrative.
+         8 invisible step-detector blocks below them give the scroll-driven
+         IntersectionObserver something to fire on. JS reads STATES[step]
+         and writes meta/title/body into the active card via cross-fade. -->
+    <section class="steps">
+
+      <!-- Mei chapter card — anchored to the right side, vertically centred -->
+      <aside class="story-card story-card--mei" data-card="mei" aria-label="Mei's chapter">
+        <div class="story-card__inner">
+          <p class="story-meta"  data-meta>—</p>
+          <h2 class="story-title" data-title>—</h2>
+          <div class="story-body" data-body></div>
+        </div>
+      </aside>
+
+      <!-- Qing chapter card — anchored to the left side, vertically centred -->
+      <aside class="story-card story-card--qing" data-card="qing" aria-label="Qing's chapter">
+        <div class="story-card__inner">
+          <p class="story-meta"  data-meta>—</p>
+          <h2 class="story-title" data-title>—</h2>
+          <div class="story-body" data-body></div>
+        </div>
+      </aside>
+
+      <!-- Finale card — centred convergence (Step 8 only) -->
+      <aside class="story-card story-card--finale" data-card="finale" aria-label="Convergence">
+        <div class="story-card__inner">
+          <p class="story-meta"  data-meta>—</p>
+          <h2 class="story-title" data-title>—</h2>
+          <div class="story-body" data-body></div>
+        </div>
+      </aside>
+
+      <!-- Invisible scroll detectors — one viewport-tall block per step.
+           They generate the scroll height; IntersectionObserver fires on each. -->
+      <div class="step-detector" data-step="1"></div>
+      <div class="step-detector" data-step="2"></div>
+      <div class="step-detector" data-step="3"></div>
+      <div class="step-detector" data-step="4"></div>
+      <div class="step-detector" data-step="5"></div>
+      <div class="step-detector" data-step="6"></div>
+      <div class="step-detector" data-step="7"></div>
+      <div class="step-detector" data-step="8"></div>
+
+    </section>
+  </main>
+
+  <!-- ============================================================
+       NOW PLAYING — fixed bottom-right card, content updated per step
+       (text-only; future-extensible to <audio> when mp3s are provided)
+       ============================================================ -->
+  <aside class="now-playing" data-nowplaying aria-label="What the protagonist is currently listening to">
+    <span class="np-icon">♪</span>
+    <div class="np-meta">
+      <p class="np-who"   data-np-who>—</p>
+      <p class="np-track" data-np-track>idle</p>
+    </div>
+  </aside>
+
+  <!-- ============================================================
+       OUTRO — final beat: deep crimson reveal with white wordmark
+       and a single pulsing red dot (the city's heartbeat)
+       ============================================================ -->
+  <footer class="outro">
+    <div class="logo-card">
+      <span class="logo-mark" aria-hidden="true"></span>
+      <h2 class="logo-name">City Echo</h2>
+      <p class="logo-tag">a shared soundscape for belonging</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
