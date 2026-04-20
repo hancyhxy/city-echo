@@ -113,15 +113,20 @@ strong { color: var(--ink); }
 /* -----------------------------
    Opener (full-viewport hero)
    ----------------------------- */
+/* Sticky wordmark: stays pinned to the top of the viewport as the opener-card
+   scrolls in from below. Content sits in the UPPER third of the viewport so the
+   note has room to rise into the lower half without overlapping the title. */
 .opener {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   text-align: center;
-  padding: 0 5vw;
-  position: relative;
+  padding: 34vh 5vw 0;
+  position: sticky;
+  top: 0;
+  z-index: 1;
   scroll-snap-align: start;
   scroll-snap-stop: always;
 }
@@ -137,10 +142,10 @@ strong { color: var(--ink); }
 
 .opener-title {
   font-family: var(--serif);
-  font-size: clamp(48px, 8vw, 110px);
+  font-size: clamp(32px, 3.6vw, 44px);
   font-weight: 600;
   line-height: 1.05;
-  margin: 0 0 32px;
+  margin: 0 0 20px;
   color: var(--ink);
   letter-spacing: -0.01em;
 }
@@ -152,11 +157,11 @@ strong { color: var(--ink); }
 
 .opener-deck {
   font-family: var(--serif);
-  font-size: clamp(18px, 2vw, 24px);
+  font-size: clamp(15px, 1.3vw, 18px);
   line-height: 1.5;
   color: var(--ink-soft);
-  max-width: 640px;
-  margin: 0 0 80px;
+  max-width: 520px;
+  margin: 0;
 }
 
 .opener-scroll-hint {
@@ -168,11 +173,175 @@ strong { color: var(--ink); }
   position: absolute;
   bottom: 48px;
   animation: bob 2.2s ease-in-out infinite;
+  transition: opacity 0.6s ease;
+}
+
+/* Hide the scroll hint once page 2's note has arrived — the cue is done. */
+body.card-in-view .opener-scroll-hint {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* -----------------------------
+   Audio start gate — hero buttons that satisfy browser autoplay policy.
+   Editorial pair: primary (signal-amber) and secondary (outlined). Fade out
+   once either is clicked via body.audio-gated-out.
+   ----------------------------- */
+.audio-gate {
+  display: flex;
+  gap: 14px;
+  margin: 32px 0 0;
+  justify-content: center;
+  flex-wrap: wrap;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+body.audio-gated-out .audio-gate {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+}
+
+.audio-gate__btn {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-style: italic;
+  letter-spacing: 0.01em;
+  padding: 12px 26px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+.audio-gate__btn:hover { transform: translateY(-1px); }
+
+.audio-gate__btn--sound {
+  background: var(--signal);
+  color: #fff;
+  border: 1px solid var(--signal);
+}
+.audio-gate__btn--sound:hover { background: #c06a22; border-color: #c06a22; }
+
+.audio-gate__btn--silent {
+  background: transparent;
+  color: var(--ink-soft);
+  border: 1px solid var(--ink-faint);
+}
+.audio-gate__btn--silent:hover { color: var(--ink); border-color: var(--ink-soft); }
+
+/* Hide scroll hint until the gate closes — the buttons are the CTA. */
+.opener:not(.is-gate-closed) .opener-scroll-hint {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* -----------------------------
+   Persistent sound toggle — fixed top-right after the gate closes.
+   Glyph-only; no text, matching the editorial restraint of .now-playing.
+   ----------------------------- */
+.sound-toggle {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(184, 154, 106, 0.35);
+  background: rgba(252, 246, 232, 0.78);
+  backdrop-filter: blur(14px) saturate(1.05);
+  -webkit-backdrop-filter: blur(14px) saturate(1.05);
+  color: var(--ink-soft);
+  cursor: pointer;
+  z-index: 101;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, opacity 0.4s ease;
+}
+.sound-toggle:hover {
+  background: rgba(252, 246, 232, 0.95);
+  color: var(--ink);
+}
+
+.sound-toggle__icon { width: 18px; height: 18px; display: none; }
+.sound-toggle[data-state="on"]  .sound-toggle__icon--on  { display: block; }
+.sound-toggle[data-state="off"] .sound-toggle__icon--off { display: block; }
+
+/* While opener-card (page 2) is in view, force-hide the scrollytelling map
+   even if mapObserver has already fired. The opener-card and the map's .scrolly
+   container sit adjacent in the DOM, so rootMargin alone can't fully guarantee
+   separation — CSS mutual exclusion is the belt-and-braces guarantee. */
+body.card-in-view .map-sticky {
+  opacity: 0 !important;
 }
 
 @keyframes bob {
   0%, 100% { transform: translateY(0); opacity: 0.6; }
   50%      { transform: translateY(8px); opacity: 1; }
+}
+
+/* -----------------------------
+   Opener card (page 2) — editorial "this is a story about..." beat.
+   Uses the same trace-note visual family as in-map traces, scaled up
+   to carry a full sentence. Participates in the document snap chain.
+   ----------------------------- */
+/* Same paper surface as page 1 (no bg/z-index). The note sits in the LOWER
+   half of the viewport so the sticky wordmark above stays visible once the
+   note arrives — same-screen co-existence, like Pudding. */
+.opener-card {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0 5vw 14vh;
+  position: relative;
+  z-index: 2;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Scaled-up echo-note aesthetic: same paper cream, same subtle inset edge,
+   same torn-paper clip-path. No signal-coloured frame — this is an ambient
+   "a piece of paper with a note on it" beat, not a trace with Mei/Qing colour. */
+.trace-note {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(16px, 1.6vw, 22px);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  background: #fff8e8;
+  padding: 28px 40px;
+  max-width: 500px;
+  transform: translate(0, 40px) rotate(-1.5deg);
+  opacity: 0;
+  transition:
+    opacity 0.9s cubic-bezier(.2, .6, .2, 1),
+    transform 0.9s cubic-bezier(.2, .6, .2, 1);
+  box-shadow:
+    0 2px 6px rgba(58, 42, 22, 0.14),
+    inset 0 0 0 1px rgba(184, 154, 106, 0.25);
+  clip-path: polygon(
+    2% 6%, 18% 0%, 38% 5%, 58% 1%, 80% 6%, 96% 2%, 100% 18%,
+    98% 38%, 100% 60%, 96% 82%, 100% 96%, 80% 100%, 60% 96%,
+    40% 100%, 18% 96%, 2% 100%, 0% 80%, 4% 60%, 0% 38%, 2% 18%
+  );
+  text-align: left;
+}
+
+.opener-card.is-visible .trace-note {
+  opacity: 1;
+  transform: translate(0, 0) rotate(-1.5deg);
+}
+
+.trace-note p { margin: 0; }
+.trace-note em { color: var(--signal); font-style: italic; }
+
+.trace-note__sub {
+  margin-top: 20px !important;
+  font-size: 0.72em;
+  font-style: normal;
+  color: var(--ink-faint);
+  letter-spacing: 0.02em;
 }
 
 /* -----------------------------
@@ -499,13 +668,14 @@ strong { color: var(--ink); }
 .echo-note:nth-child(4n+1) { transform: translate(-50%, -50%) rotate(3deg); }
 
 /* -----------------------------
-   Counter (top-right of map)
+   Counter (bottom-left of map) — top-right slot is reserved for the
+   persistent .sound-toggle, so the counter lives in the opposite corner.
    ----------------------------- */
 .map-counter {
   position: absolute;
-  top: 24px;
-  right: 24px;
-  text-align: right;
+  bottom: 24px;
+  left: 24px;
+  text-align: left;
   font-family: var(--serif);
   color: var(--ink-soft);
   z-index: 10;
@@ -787,20 +957,24 @@ body[data-tone="finale"] .story-card__inner { background: rgba(252, 224, 212, 0.
     0 8px 22px rgba(58,42,22,0.14);
   font-family: var(--serif);
   z-index: 100;
-  opacity: 0.4;
+  opacity: 0;
   transform: translateY(0);
   transition: opacity 0.5s ease, transform 0.5s ease,
               background 1.6s ease, border-color 1.6s ease;
   pointer-events: none;
 }
 
+/* Only show the now-playing card during Mei / Qing chapters. All other
+   tones (neutral opener, finale, outro) keep the card hidden even if a
+   background track is still playing — the card belongs to the protagonists. */
+body[data-tone="mei"]  .now-playing.is-active,
+body[data-tone="qing"] .now-playing.is-active {
+  opacity: 1;
+}
+
 /* Tone-aware now-playing surface — same hue logic as .story-card__inner */
 body[data-tone="qing"]   .now-playing { background: rgba(252, 240, 238, 0.78); border-color: rgba(193, 122, 122, 0.40); }
 body[data-tone="finale"] .now-playing { background: rgba(252, 224, 212, 0.80); border-color: rgba(180, 75, 50,   0.45); }
-
-.now-playing.is-active {
-  opacity: 1;
-}
 
 .np-icon {
   font-size: 20px;

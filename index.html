@@ -10,20 +10,37 @@
 <body>
 
   <!-- ============================================================
-       OPENER (full viewport, before scrollytelling begins)
+       OPENER — Two-page editorial intro.
+       Page 1: wordmark + one-line deck (what the project is).
+       Page 2: a single enlarged trace-note (who the story is about).
+       Both participate in the y-mandatory scroll-snap chain below.
        ============================================================ -->
   <header class="opener">
-    <p class="eyebrow">A Listening Map</p>
-    <h1 class="opener-title">
-      The city <em>is</em> listening.
-    </h1>
-    <p class="opener-deck">
-      How <strong>belonging</strong> gets pinned across Sydney — one place,<br />
-      one song, one stranger at a time.<br />
-      Two commutes, one shared room.
-    </p>
+    <h1 class="opener-title">City Echo</h1>
+    <p class="opener-deck">An app about how belonging gets pinned across a city — one place, one song, one stranger at a time.</p>
+
+    <!-- Start gate — satisfies browser autoplay policy. A synchronous
+         audio.play() inside the click handler is the only reliable unlock
+         path on Chrome + Safari + iOS. Either button unlocks audio; the
+         sound button plays unmuted, silence leaves it muted for later. -->
+    <div class="audio-gate" data-audio-gate>
+      <button type="button" class="audio-gate__btn audio-gate__btn--sound" data-audio-gate-sound>
+        Begin with sound
+      </button>
+      <button type="button" class="audio-gate__btn audio-gate__btn--silent" data-audio-gate-silent>
+        Read in silence
+      </button>
+    </div>
+
     <p class="opener-scroll-hint">scroll ↓</p>
   </header>
+
+  <section class="opener-card" aria-label="About this story">
+    <div class="trace-note">
+      <p>This is a story about <em>belonging</em> —<br />told through Mei and Qing.</p>
+      <p class="trace-note__sub">Two commutes. One shared room.</p>
+    </div>
+  </section>
 
   <!-- ============================================================
        SCROLLYTELLING — full-bleed fixed map underneath, narrative cards
@@ -203,16 +220,38 @@
   </main>
 
   <!-- ============================================================
-       NOW PLAYING — fixed bottom-right card, content updated per step
-       (text-only; future-extensible to <audio> when mp3s are provided)
+       NOW PLAYING — fixed bottom-right card, content updated per step.
+       The icon on the left doubles as a mute toggle / autoplay unblock button.
+       Two <audio> elements preload and swap per chapter (Mei → Qing → Finale).
        ============================================================ -->
   <aside class="now-playing" data-nowplaying aria-label="What the protagonist is currently listening to">
-    <span class="np-icon">♪</span>
+    <span class="np-icon" aria-hidden="true">♪</span>
     <div class="np-meta">
       <p class="np-who"   data-np-who>—</p>
       <p class="np-track" data-np-track>idle</p>
     </div>
   </aside>
+
+  <!-- Persistent sound toggle — top-right, appears after the start gate
+       closes. Flips mute on the current track; stays visible even during
+       Step 8 and the outro where the .now-playing card is hidden.
+       Line-art SVGs inherit currentColor from .sound-toggle so the glyph
+       matches the editorial ink palette (no OS 3D speaker emoji). -->
+  <button type="button" class="sound-toggle" data-sound-toggle aria-label="Toggle sound" hidden>
+    <svg class="sound-toggle__icon sound-toggle__icon--on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M4 9v6h4l5 4V5L8 9H4z"/>
+      <path d="M16 8.5a4 4 0 0 1 0 7"/>
+      <path d="M19 6a7 7 0 0 1 0 12"/>
+    </svg>
+    <svg class="sound-toggle__icon sound-toggle__icon--off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M4 9v6h4l5 4V5L8 9H4z"/>
+      <line x1="17" y1="9" x2="22" y2="14"/>
+      <line x1="22" y1="9" x2="17" y2="14"/>
+    </svg>
+  </button>
+
+  <audio id="audio-mei"  src="media/%E3%80%90%E9%92%A2%E7%90%B4%E6%94%B9%E7%BC%96%E3%80%91%E5%91%A8%E6%9D%B0%E4%BC%A6%E3%80%8A%E6%99%B4%E5%A4%A9%E3%80%8B%E9%AB%98%E5%BA%A6%E8%BF%98%E5%8E%9F%20-%20Cuppix.mp3" preload="auto" loop></audio>
+  <audio id="audio-qing" src="media/Ribs%20-%20Lorde.mp3" preload="auto" loop></audio>
 
   <!-- ============================================================
        OUTRO — final beat: deep crimson reveal with white wordmark

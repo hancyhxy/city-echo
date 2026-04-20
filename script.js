@@ -57,7 +57,7 @@
   // -----------------------------
   const STATES = {
     1: {
-      tone: 'neutral',
+      tone: 'mei',
       card: 'mei',
       content: {
         meta:  'Mei · UTS Library · on loop, restless',
@@ -71,7 +71,7 @@
       echoNotes: [],
       rail: false,
       count: 47,
-      nowPlaying: null
+      nowPlaying: { who: 'Mei is listening', track: '〈晴天〉· Jay Chou' }
     },
     2: {
       tone: 'mei',
@@ -139,7 +139,7 @@
       echoNotes: ['bur-1', 'bur-2'],
       rail: false,
       count: 156,
-      nowPlaying: null
+      nowPlaying: { who: 'Qing is listening', track: '"Ribs" · Lorde' }
     },
     6: {
       tone: 'qing',
@@ -209,6 +209,7 @@
     applyRail(state);
     animateCounter(state.count);
     applyNowPlaying(state.nowPlaying);
+    applyAudio(state.nowPlaying, stepIdx);
     applyCard(state);
   }
 
@@ -371,6 +372,159 @@
   }
 
   // -----------------------------
+  // Audio controller — maps nowPlaying.track identity to <audio> element.
+  // Tracks persist across steps that share the same track; only a change in
+  // identity triggers a crossfade. Finale (step 8) keeps Qing's Ribs at 50%.
+  // -----------------------------
+  const audioMei  = document.getElementById('audio-mei');
+  const audioQing = document.getElementById('audio-qing');
+
+  // Mute state is driven by the start gate (Begin with sound / Read in silence)
+  // and flipped live by the top-right sound toggle. Default muted until the
+  // user makes a choice — this means applyAudio() during hero pre-gate fires
+  // with volume 0 and elements still unlocked, ready to flip on demand.
+  let audioMuted = true;
+
+  const TRACK_TO_EL = {
+    '〈晴天〉· Jay Chou': audioMei,
+    '"Ribs" · Lorde'   : audioQing
+  };
+
+  let currentTrackEl = null;
+  // Track of what SHOULD be playing (even if .play() rejected or we haven't
+  // unlocked yet). unlockAudio() uses this to resume the right track on first
+  // user gesture. Separate from currentTrackEl so stopCurrent() nulling doesn't
+  // lose the intent.
+  let desiredTrackEl = null;
+
+  function fadeVolume(el, to, duration, done) {
+    const from = el.volume;
+    const t0   = performance.now();
+    function tick(now) {
+      const t = Math.min(1, (now - t0) / duration);
+      el.volume = from + (to - from) * t;
+      if (t < 1) requestAnimationFrame(tick);
+      else if (done) done();
+    }
+    requestAnimationFrame(tick);
+  }
+
+  // Fade out + pause + rewind. Any change of track identity restarts from
+  // the top on next play — simple, predictable chapter-based semantics.
+  function stopCurrent() {
+    if (!currentTrackEl) return;
+    const el = currentTrackEl;
+    currentTrackEl = null;
+    fadeVolume(el, 0, 300, () => { el.pause(); el.currentTime = 0; });
+  }
+
+  function applyAudio(np, stepIdx) {
+    const isFinale = stepIdx === 8;
+    if (!np) { desiredTrackEl = null; stopCurrent(); return; }
+    const targetEl = isFinale ? audioQing : (TRACK_TO_EL[np.track] || null);
+    if (!targetEl) { desiredTrackEl = null; stopCurrent(); return; }
+    desiredTrackEl = targetEl;
+    // Same track already playing, or we think it is — nothing to do.
+    // readyState >= 2 (HAVE_CURRENT_DATA) guards against a stale currentTrackEl
+    // that was marked "playing" but actually stalled/paused by the browser.
+    if (targetEl === currentTrackEl && !targetEl.paused && targetEl.readyState >= 2) return;
+    // Switch (or retry after a failed autoplay).
+    if (targetEl !== currentTrackEl) {
+      stopCurrent();
+      currentTrackEl = targetEl;
+      targetEl.currentTime = 0;
+    }
+    targetEl.volume = 0;
+    targetEl.muted  = audioMuted;
+    const tryPlay = targetEl.play();
+    if (tryPlay && tryPlay.then) {
+      tryPlay.then(() => {
+        fadeVolume(targetEl, audioMuted ? 0 : 1.0, 400);
+      }).catch((err) => {
+        console.warn('[audio] play() blocked →', err.name, err.message);
+        // Leave currentTrackEl set — unlockAudio() will resume when the user
+        // makes a gesture. desiredTrackEl is the source of truth.
+      });
+    }
+  }
+
+  // Safety net — if the desired track gets paused by anything other than
+  // stopCurrent() (tab-switch recovery, OS media keys, autoplay quirks),
+  // resume it. stopCurrent() always nulls desiredTrackEl's partner, so an
+  // intentional stop leaves el !== desiredTrackEl and is skipped.
+  [audioMei, audioQing].forEach(el => {
+    if (!el) return;
+    el.addEventListener('pause', () => {
+      if (!audioUnlocked) return;
+      if (el !== desiredTrackEl) return;
+      if (el.ended) return;
+      el.play().catch(() => {});
+    });
+  });
+
+  // -----------------------------
+  // Autoplay unlock — call this from a click handler so browsers accept the
+  // synchronous .play(). The old passive listeners (scroll/wheel/touchstart)
+  // were unreliable on Safari and trackpad-only Chrome; we now gate on an
+  // explicit button click in the hero.
+  // -----------------------------
+  let audioUnlocked = false;
+  function unlockAudio() {
+    if (audioUnlocked) return;
+    audioUnlocked = true;
+    const target = desiredTrackEl;
+    if (!target) return;
+    currentTrackEl = target;
+    if (target.paused) {
+      target.volume = 0;
+      target.muted  = audioMuted;
+      target.play().then(() => {
+        fadeVolume(target, audioMuted ? 0 : 1.0, 400);
+        console.log('[audio] unlocked + playing', target.id);
+      }).catch(err => console.warn('[audio] unlock play failed', err.name));
+    }
+  }
+
+  // -----------------------------
+  // Start gate — editorial button pair on the hero. Clicking either button
+  // satisfies Chrome/Safari/iOS autoplay policy via a strong user gesture.
+  //   Sound  → audioMuted=false, unlock, play at full volume as soon as
+  //            Step 1 fires.
+  //   Silent → audioMuted=true,  unlock anyway so the top-right toggle can
+  //            later flip mute without needing a fresh gesture.
+  // -----------------------------
+  const gateSoundBtn  = document.querySelector('[data-audio-gate-sound]');
+  const gateSilentBtn = document.querySelector('[data-audio-gate-silent]');
+  const soundToggle   = document.querySelector('[data-sound-toggle]');
+
+  function closeGate(withSound) {
+    audioMuted = !withSound;
+    unlockAudio();
+    document.body.classList.add('audio-gated-out');
+    document.querySelector('.opener')?.classList.add('is-gate-closed');
+    if (soundToggle) {
+      soundToggle.hidden = false;
+      soundToggle.dataset.state = withSound ? 'on' : 'off';
+    }
+  }
+
+  if (gateSoundBtn)  gateSoundBtn.addEventListener('click',  () => closeGate(true));
+  if (gateSilentBtn) gateSilentBtn.addEventListener('click', () => closeGate(false));
+
+  // Top-right sound toggle — flips volume of the currently playing track.
+  // No new gesture needed: audio was already unlocked at the gate.
+  if (soundToggle) {
+    soundToggle.addEventListener('click', () => {
+      audioMuted = !audioMuted;
+      soundToggle.dataset.state = audioMuted ? 'off' : 'on';
+      if (currentTrackEl) {
+        currentTrackEl.muted = audioMuted;
+        fadeVolume(currentTrackEl, audioMuted ? 0 : 1.0, 350);
+      }
+    });
+  }
+
+  // -----------------------------
   // Animated counter (ease-out cubic, ~700ms)
   // -----------------------------
   let currentCount = 0;
@@ -396,17 +550,24 @@
   // the viewport's mid-band. Drives applyState which in turn updates the
   // map, the active story-card content, the now-playing card, and tone.
   // -----------------------------
-  // currentStep is kept in sync with whichever step-detector last fired,
-  // so keyboard navigation (← → / Space) knows where "next" and "prev" are.
-  let currentStep = 1;
-  const STEP_COUNT = 8;
+  // Ordered list of every snap target in the document (opener, opener-card,
+  // 8 step-detectors, outro). Keyboard navigation walks this array so pages
+  // without a step-detector (opener, opener-card) are still reachable.
+  const SNAP_SECTIONS = [
+    document.querySelector('.opener'),
+    document.querySelector('.opener-card'),
+    ...Array.from(document.querySelectorAll('.step-detector')),
+    document.querySelector('.outro')
+  ].filter(Boolean);
+  let currentSectionIdx = 0;
 
   const stepObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const idx = parseInt(entry.target.dataset.step, 10);
-        currentStep = idx;
         applyState(idx);
+        const matchIdx = SNAP_SECTIONS.indexOf(entry.target);
+        if (matchIdx >= 0) currentSectionIdx = matchIdx;
       }
     });
   }, {
@@ -429,6 +590,44 @@
   }
 
   // -----------------------------
+  // Opener-card observer — re-triggerable so the trace-note "lands"
+  // every time the reader scrolls back into page 2.
+  // -----------------------------
+  const openerCard = document.querySelector('.opener-card');
+  if (openerCard) {
+    const openerCardObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          openerCard.classList.add('is-visible');
+          document.body.classList.add('card-in-view');
+        } else {
+          openerCard.classList.remove('is-visible');
+          document.body.classList.remove('card-in-view');
+        }
+      });
+    }, { threshold: 0.4 });
+    openerCardObserver.observe(openerCard);
+  }
+
+  // -----------------------------
+  // Opener + opener-card tone reset — whenever either hero page is in view
+  // (including on scroll-back from a step), clear body tone and deactivate
+  // the now-playing card. The CSS gate at styles.css:884-887 only shows the
+  // card for tone="mei"|"qing", so setting "neutral" hides it cleanly.
+  // -----------------------------
+  const opener = document.querySelector('.opener');
+  const openerNeutralObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        document.body.dataset.tone = 'neutral';
+        if (npCard) npCard.classList.remove('is-active');
+      }
+    });
+  }, { threshold: 0.5 });
+  if (opener)     openerNeutralObserver.observe(opener);
+  if (openerCard) openerNeutralObserver.observe(openerCard);
+
+  // -----------------------------
   // Scrolly visibility — fade the fixed-positioned map AND all story-cards
   // in/out as the .scrolly section enters/leaves the viewport. Without this
   // the map would sit on top of the opener and outro and ruin both, and
@@ -444,6 +643,8 @@
         } else {
           mapStick.classList.remove('is-visible');
           hideAllCards();
+          if (npCard) npCard.classList.remove('is-active');
+          document.body.dataset.tone = 'neutral';
         }
       });
     }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
@@ -451,15 +652,15 @@
   }
 
   // -----------------------------
-  // Keyboard navigation — ← / → / Space jump one step at a time.
+  // Keyboard navigation — ← / → / Space walk through SNAP_SECTIONS in order.
   // scrollIntoView triggers the browser's smooth scroll, which lands on the
   // nearest snap point; the existing IntersectionObserver pipeline handles
-  // the state change, so no new rendering logic is introduced here.
+  // any state change that should follow (for step-detector targets).
   // -----------------------------
-  function goToStep(n) {
-    const target = Math.max(1, Math.min(STEP_COUNT, n));
-    const el = document.querySelector(`.step-detector[data-step="${target}"]`);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  function goToSection(n) {
+    const target = Math.max(0, Math.min(SNAP_SECTIONS.length - 1, n));
+    currentSectionIdx = target;
+    SNAP_SECTIONS[target].scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   document.addEventListener('keydown', (e) => {
@@ -468,18 +669,23 @@
       case 'ArrowRight':
       case ' ':
         e.preventDefault();
-        goToStep(currentStep + 1);
+        goToSection(currentSectionIdx + 1);
         break;
       case 'ArrowLeft':
         e.preventDefault();
-        goToStep(currentStep - 1);
+        goToSection(currentSectionIdx - 1);
         break;
     }
   });
 
   // -----------------------------
-  // Initial paint — start at step 1's state so map isn't blank above scrolly
+  // Initial paint — populate step 1's state so the map isn't blank above
+  // scrolly, then immediately revert tone + card to neutral so the hero
+  // opener loads clean (no now-playing card leaking onto Page 1 / Page 2).
+  // The first .step-detector intersection will re-assert the correct state.
   // -----------------------------
   applyState(1);
+  document.body.dataset.tone = 'neutral';
+  if (npCard) npCard.classList.remove('is-active');
 
 })();
