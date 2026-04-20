@@ -89,6 +89,7 @@ body[data-tone="neutral"] {
 
 html {
   scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
 }
 
 body {
@@ -121,6 +122,8 @@ strong { color: var(--ink); }
   text-align: center;
   padding: 0 5vw;
   position: relative;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 .eyebrow {
@@ -543,8 +546,10 @@ strong { color: var(--ink); }
 /* Invisible scroll regions — each one gives the browser ~90vh of scroll
    to traverse before firing the next step. No visible content. */
 .step-detector {
-  min-height: 90vh;
+  height: 100vh;
   pointer-events: none;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 /* Story cards — fixed to the viewport, content swapped per step.
@@ -675,6 +680,8 @@ body[data-tone="finale"] .story-card__inner { background: rgba(252, 224, 212, 0.
   justify-content: center;
   padding: 0 5vw;
   background: #5a1414;            /* oxblood / deep crimson */
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
   /* Full-bleed override: ignore body's tone background entirely */
   position: relative;
   z-index: 50;                    /* above any leftover map */
@@ -868,7 +875,7 @@ body[data-tone="finale"] .now-playing { background: rgba(252, 224, 212, 0.80); b
     padding: 24px 22px;
   }
   .step-detector {
-    min-height: 80vh;
+    height: 100vh;
   }
   .opener-title {
     font-size: clamp(40px, 11vw, 72px);

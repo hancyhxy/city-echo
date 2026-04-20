@@ -396,16 +396,22 @@
   // the viewport's mid-band. Drives applyState which in turn updates the
   // map, the active story-card content, the now-playing card, and tone.
   // -----------------------------
+  // currentStep is kept in sync with whichever step-detector last fired,
+  // so keyboard navigation (← → / Space) knows where "next" and "prev" are.
+  let currentStep = 1;
+  const STEP_COUNT = 8;
+
   const stepObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const idx = parseInt(entry.target.dataset.step, 10);
+        currentStep = idx;
         applyState(idx);
       }
     });
   }, {
-    threshold: 0.55,
-    rootMargin: '-20% 0px -20% 0px'
+    threshold: 0.5,
+    rootMargin: '-10% 0px -10% 0px'
   });
 
   stepDetectors.forEach(d => stepObserver.observe(d));
@@ -443,6 +449,33 @@
     }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
     mapObserver.observe(scrolly);
   }
+
+  // -----------------------------
+  // Keyboard navigation — ← / → / Space jump one step at a time.
+  // scrollIntoView triggers the browser's smooth scroll, which lands on the
+  // nearest snap point; the existing IntersectionObserver pipeline handles
+  // the state change, so no new rendering logic is introduced here.
+  // -----------------------------
+  function goToStep(n) {
+    const target = Math.max(1, Math.min(STEP_COUNT, n));
+    const el = document.querySelector(`.step-detector[data-step="${target}"]`);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.target.matches('input, textarea, [contenteditable]')) return;
+    switch (e.key) {
+      case 'ArrowRight':
+      case ' ':
+        e.preventDefault();
+        goToStep(currentStep + 1);
+        break;
+      case 'ArrowLeft':
+        e.preventDefault();
+        goToStep(currentStep - 1);
+        break;
+    }
+  });
 
   // -----------------------------
   // Initial paint — start at step 1's state so map isn't blank above scrolly
