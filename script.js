@@ -9,11 +9,11 @@
        map visually consistent regardless of scroll direction or speed.
 
    v2 changes vs v1:
-     - basemap is now two layered <img> tags (cbd / wide) instead of
-       inline SVG. STATES carries a `mapView` { src, x, y, scale }
+     - basemap is now three layered <img> tags (mei / qing / finale)
+       instead of inline SVG. STATES carries a `mapView` { src, x, y, scale }
        that drives Ken Burns pan + zoom transform on the basemap stage.
-     - pins and trace tags carry TWO coordinate sets via data-cbd-x/y
-       and data-wide-x/y. JS reads the right pair when basemap changes.
+     - pins and trace tags carry TWO coordinate sets via data-mei-x/y
+       and data-qing-x/y. JS reads the right pair when basemap changes.
      - new STATES field: `nowPlaying` { who, track } updates a fixed
        bottom-right card showing what the current protagonist is hearing.
    ============================================================ */
@@ -45,7 +45,7 @@
   //
   // Fields:
   //   mapView    : { src, x, y, scale }
-  //                 src   — 'cbd' or 'wide' (which basemap layer is active)
+  //                 src   — 'mei' or 'qing' (which basemap layer is active)
   //                 x, y  — translate in % (negative = pan map left/up)
   //                 scale — zoom (1 = natural, >1 = pushed in)
   //   active     : pin ids to pulse amber
@@ -64,7 +64,7 @@
         title: 'She walks in, stuck on repeat.',
         body:  '<p>Another study session, another loop through the same five songs. The algorithm has run out of ideas. She doesn\'t know it yet — but the room she\'s just entered already has a sound of its own.</p>'
       },
-      mapView: { src: 'cbd', x: 0, y: 0, scale: 1.0 },
+      mapView: { src: 'mei', x: 0, y: 0, scale: 1.0 },
       active: ['uts'],
       anchored: [],
       traces: [],
@@ -81,7 +81,7 @@
         title: 'She picks a feeling, not a genre.',
         body:  '<p>She picks a mood — focus — and a language — Chinese. The library\'s playlist reshuffles around her. A song surfaces with a quiet note: <em>"12 students in this building are listening right now."</em> She didn\'t choose it. The room did.</p>'
       },
-      mapView: { src: 'cbd', x: -2, y: -2, scale: 1.15 },
+      mapView: { src: 'mei', x: -2, y: -2, scale: 1.15 },
       active: ['uts'],
       anchored: [],
       traces: [],
@@ -98,7 +98,7 @@
         title: 'A stranger has been in her chair before.',
         body:  '<p><em>"listened to this during my thesis all-nighter, felt less alone."</em> A fingerprint attached to the song — no name, no message, just a feeling. At the end of the track, Mei adds her own: <em>"first thing that\'s helped me write in Mandarin all week."</em></p>'
       },
-      mapView: { src: 'cbd', x: -2, y: -2, scale: 1.15 },
+      mapView: { src: 'mei', x: -2, y: -2, scale: 1.15 },
       active: ['uts'],
       anchored: [],
       traces: ['mei'],
@@ -115,7 +115,7 @@
         title: 'She belongs to this room now.',
         body:  '<p><em>"Your trace has joined 48 others at UTS Library tonight."</em> She glances up — for the first time, the other students are not strangers but a quiet constellation of listeners. She never spoke a word.</p>'
       },
-      mapView: { src: 'cbd', x: 0, y: 0, scale: 1.0 },
+      mapView: { src: 'mei', x: 0, y: 0, scale: 1.0 },
       active: [],
       anchored: ['uts'],
       traces: ['mei-playlist'],
@@ -132,7 +132,7 @@
         title: 'Across town, another commute begins.',
         body:  '<p>Qing stands on Platform 2 with her crossbody bag, post-uni fatigue in her shoulders. Earbuds in, nothing playing yet. Tonight she wants something — but she doesn\'t know what.</p>'
       },
-      mapView: { src: 'wide', x: 18, y: -2, scale: 1.4 },
+      mapView: { src: 'qing', x: 18, y: -2, scale: 1.4 },
       active: ['burwood'],
       anchored: ['uts'],
       traces: [],
@@ -149,7 +149,7 @@
         title: 'Her train route has its own music.',
         body:  '<p><em>"Burwood → Wynyard line · 218 commuters are sharing music along this route tonight."</em> She switches to the map view. The city reshapes itself — organised not by streets, but by what people have felt at each stop, song by song.</p>'
       },
-      mapView: { src: 'wide', x: 0, y: 0, scale: 1.15 },
+      mapView: { src: 'qing', x: 0, y: 0, scale: 1.15 },
       active: ['burwood', 'spice', 'central'],
       anchored: ['uts'],
       traces: [],
@@ -166,7 +166,7 @@
         title: 'A stranger left a song along her exact line — and it isn\'t even in her language.',
         body:  '<p>The track is <em>"Ribs" by Lorde</em>. English. Slow piano synth. <em>"It feels so scary getting old."</em> Attached: <em>"Mandarin is my first language but this song held me anyway. Played it between Strathfield and Central every night of my first semester."</em> She listens. She leaves her own trace. She doesn\'t know the stranger\'s name. She doesn\'t need to.</p><p class="thesis">Belonging didn\'t need a shared language. It needed a shared three minutes.</p>'
       },
-      mapView: { src: 'wide', x: -8, y: 2, scale: 1.2 },
+      mapView: { src: 'qing', x: -8, y: 2, scale: 1.2 },
       active: ['burwood', 'central', 'wynyard'],
       anchored: ['uts'],
       traces: ['qing'],
@@ -291,7 +291,7 @@
     if (echoLayer)    echoLayer.style.transform = t;
 
     // Reposition pins/traces/echoes for the active basemap (different maps, different anchors)
-    const mapKey = mv.src; // 'cbd', 'wide', or 'finale'
+    const mapKey = mv.src; // 'mei', 'qing', or 'finale'
     pins.forEach(pin => positionElement(pin, mapKey));
     traces.forEach(trace => positionElement(trace, mapKey));
     echoNotes.forEach(note => positionElement(note, mapKey));
@@ -301,7 +301,7 @@
     const x = el.dataset[mapKey + 'X'];
     const y = el.dataset[mapKey + 'Y'];
     if (x === '' || x === undefined || y === '' || y === undefined) {
-      // Element has no coordinate for this map (e.g. Burwood on cbd map) — hide
+      // Element has no coordinate for this map (e.g. Burwood on mei map) — hide
       el.style.display = 'none';
       return;
     }

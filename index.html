@@ -91,13 +91,13 @@
       <div class="map-frame">
 
         <!-- Three watercolour basemap layers, one per chapter:
-             - cbd (sepia honey)  → Mei chapter
-             - wide (dusty rose)  → Qing chapter
+             - mei    (sepia honey)       → Mei chapter
+             - qing   (peach-terracotta)  → Qing chapter
              - finale (coral)     → Step 8 convergence
              Ken Burns transform applied via JS per step. -->
         <div class="basemap-stage" aria-hidden="true">
-          <img src="map-cbd.png"    alt="" class="basemap-img basemap-img--cbd    is-active" data-map="cbd"    />
-          <img src="map-wide.png"   alt="" class="basemap-img basemap-img--wide"              data-map="wide"   />
+          <img src="map-mei.png"    alt="" class="basemap-img basemap-img--mei    is-active" data-map="mei"    />
+          <img src="map-qing.png"   alt="" class="basemap-img basemap-img--qing"              data-map="qing"   />
           <img src="map-finale.png" alt="" class="basemap-img basemap-img--finale"            data-map="finale" />
 
           <!-- Rail line overlay (drawn on top of basemap, follows the same transform via parent stage) -->
@@ -116,37 +116,37 @@
         </div>
 
         <!-- Pin overlay (5 place-pins). Each pin carries TWO coordinate sets:
-             one for the CBD-zoom map, one for the wide map. JS picks the right
+             one for the mei zoom map, one for the qing wide map. JS picks the right
              one based on the active basemap, and pins ride the same transform
              as the basemap (so Ken Burns pan/zoom keeps pins anchored). -->
         <div class="pin-layer">
           <!-- Mei pins (in both maps) -->
-          <div class="pin pin--uts"     data-pin="uts"     data-cbd-x="44" data-cbd-y="64" data-wide-x="56.5" data-wide-y="58" data-finale-x="56.5" data-finale-y="58">
+          <div class="pin pin--uts"     data-pin="uts"     data-mei-x="44" data-mei-y="64" data-qing-x="56.5" data-qing-y="58" data-finale-x="56.5" data-finale-y="58">
             <span class="pin-dot"></span>
             <span class="pin-pulse"></span>
             <span class="pin-label">UTS Library</span>
           </div>
 
-          <div class="pin pin--spice"   data-pin="spice"   data-cbd-x="43" data-cbd-y="66" data-wide-x="56" data-wide-y="60" data-finale-x="56" data-finale-y="60">
+          <div class="pin pin--spice"   data-pin="spice"   data-mei-x="43" data-mei-y="66" data-qing-x="56" data-qing-y="60" data-finale-x="56" data-finale-y="60">
             <span class="pin-dot"></span>
             <span class="pin-pulse"></span>
             <span class="pin-label">Spice Alley</span>
           </div>
 
-          <div class="pin pin--central" data-pin="central" data-cbd-x="48" data-cbd-y="60" data-wide-x="58" data-wide-y="56" data-finale-x="58" data-finale-y="56">
+          <div class="pin pin--central" data-pin="central" data-mei-x="48" data-mei-y="60" data-qing-x="58" data-qing-y="56" data-finale-x="58" data-finale-y="56">
             <span class="pin-dot"></span>
             <span class="pin-pulse"></span>
             <span class="pin-label">Central</span>
           </div>
 
-          <!-- Qing pins (Burwood is wide/finale only; Wynyard exists in both but at very different positions) -->
-          <div class="pin pin--burwood" data-pin="burwood" data-cbd-x=""    data-cbd-y=""   data-wide-x="17" data-wide-y="46" data-finale-x="17" data-finale-y="46">
+          <!-- Qing pins (Burwood is qing/finale only; Wynyard exists in both but at very different positions) -->
+          <div class="pin pin--burwood" data-pin="burwood" data-mei-x=""    data-mei-y=""   data-qing-x="17" data-qing-y="46" data-finale-x="17" data-finale-y="46">
             <span class="pin-dot"></span>
             <span class="pin-pulse"></span>
             <span class="pin-label">Burwood</span>
           </div>
 
-          <div class="pin pin--wynyard" data-pin="wynyard" data-cbd-x="50" data-cbd-y="50" data-wide-x="70" data-wide-y="38" data-finale-x="70" data-finale-y="38">
+          <div class="pin pin--wynyard" data-pin="wynyard" data-mei-x="50" data-mei-y="50" data-qing-x="70" data-qing-y="38" data-finale-x="70" data-finale-y="38">
             <span class="pin-dot"></span>
             <span class="pin-pulse"></span>
             <span class="pin-label">Wynyard</span>
@@ -156,13 +156,13 @@
         <!-- Trace tags (torn-paper snippets). Like pins, they carry two
              coordinate sets and ride the basemap transform. -->
         <div class="trace-layer">
-          <div class="trace trace--mei"  data-trace="mei"  data-cbd-x="32" data-cbd-y="55" data-wide-x="49" data-wide-y="50" data-finale-x="49" data-finale-y="50">
+          <div class="trace trace--mei"  data-trace="mei"  data-mei-x="32" data-mei-y="55" data-qing-x="49" data-qing-y="50" data-finale-x="49" data-finale-y="50">
             "first thing that's helped me<br/>write in Mandarin all week"
           </div>
-          <div class="trace trace--qing" data-trace="qing" data-cbd-x="56" data-cbd-y="42" data-wide-x="60" data-wide-y="42" data-finale-x="60" data-finale-y="42">
+          <div class="trace trace--qing" data-trace="qing" data-mei-x="56" data-mei-y="42" data-qing-x="60" data-qing-y="42" data-finale-x="60" data-finale-y="42">
             "Mandarin is my first language<br/>but this song held me anyway"
           </div>
-          <div class="trace trace--mei trace--badge" data-trace="mei-playlist" data-cbd-x="48" data-cbd-y="68" data-wide-x="58" data-wide-y="60" data-finale-x="58" data-finale-y="60">
+          <div class="trace trace--mei trace--badge" data-trace="mei-playlist" data-mei-x="48" data-mei-y="68" data-qing-x="58" data-qing-y="60" data-finale-x="58" data-finale-y="60">
             ☰ 48 tracks
           </div>
         </div>
@@ -175,27 +175,27 @@
              deliberately left empty so the map reads "where belonging sediments". -->
         <div class="echo-layer">
 
-          <!-- Central Station pool (4 notes, cen-1..4). cbd/wide coords near
+          <!-- Central Station pool (4 notes, cen-1..4). mei/qing coords near
                Central; finale coords fan to the right column, outside the
                centred finale story-card rectangle. -->
-          <div class="echo-note" data-echo="cen-1" data-cbd-x="47" data-cbd-y="54" data-wide-x="55" data-wide-y="52" data-finale-x="82" data-finale-y="40">"missed the last train and this played"</div>
-          <div class="echo-note" data-echo="cen-2" data-cbd-x="46" data-cbd-y="63" data-wide-x="55" data-wide-y="60" data-finale-x="85" data-finale-y="55">"Platform 18. goodbye song."</div>
-          <div class="echo-note" data-echo="cen-3" data-cbd-x="53" data-cbd-y="64" data-wide-x="62" data-wide-y="59" data-finale-x="80" data-finale-y="70">"six years of this commute, still this song"</div>
-          <div class="echo-note" data-echo="cen-4" data-cbd-x="52" data-cbd-y="53" data-wide-x="61" data-wide-y="52" data-finale-x="88" data-finale-y="25">"delayed 40 min. thank god for this track."</div>
+          <div class="echo-note" data-echo="cen-1" data-mei-x="47" data-mei-y="54" data-qing-x="55" data-qing-y="52" data-finale-x="82" data-finale-y="40">"missed the last train and this played"</div>
+          <div class="echo-note" data-echo="cen-2" data-mei-x="46" data-mei-y="63" data-qing-x="55" data-qing-y="60" data-finale-x="85" data-finale-y="55">"Platform 18. goodbye song."</div>
+          <div class="echo-note" data-echo="cen-3" data-mei-x="53" data-mei-y="64" data-qing-x="62" data-qing-y="59" data-finale-x="80" data-finale-y="70">"six years of this commute, still this song"</div>
+          <div class="echo-note" data-echo="cen-4" data-mei-x="52" data-mei-y="53" data-qing-x="61" data-qing-y="52" data-finale-x="88" data-finale-y="25">"delayed 40 min. thank god for this track."</div>
 
-          <!-- UTS Library pool (4 notes, uts-1..4). cbd/wide coords near UTS;
+          <!-- UTS Library pool (4 notes, uts-1..4). mei/qing coords near UTS;
                finale coords fan to top and bottom bands of the fanout layout.
                Steps 2 and 3 each reveal a different pair so scrolling through
                Mei's chapter never repeats the same two voices. -->
-          <div class="echo-note" data-echo="uts-1" data-cbd-x="41" data-cbd-y="68" data-wide-x="54" data-wide-y="61" data-finale-x="18" data-finale-y="22">"studied for finals here three semesters in a row"</div>
-          <div class="echo-note" data-echo="uts-2" data-cbd-x="47" data-cbd-y="62" data-wide-x="58" data-wide-y="57" data-finale-x="38" data-finale-y="18">"level 5, window seat. my corner."</div>
-          <div class="echo-note" data-echo="uts-3" data-cbd-x="42" data-cbd-y="60" data-wide-x="55" data-wide-y="56" data-finale-x="22" data-finale-y="85">"got my first HD here. couldn't even text anyone."</div>
-          <div class="echo-note" data-echo="uts-4" data-cbd-x="49" data-cbd-y="67" data-wide-x="58" data-wide-y="60" data-finale-x="42" data-finale-y="82">"4pm sunlight on desk 7. my favourite."</div>
+          <div class="echo-note" data-echo="uts-1" data-mei-x="41" data-mei-y="68" data-qing-x="54" data-qing-y="61" data-finale-x="18" data-finale-y="22">"studied for finals here three semesters in a row"</div>
+          <div class="echo-note" data-echo="uts-2" data-mei-x="47" data-mei-y="62" data-qing-x="58" data-qing-y="57" data-finale-x="38" data-finale-y="18">"level 5, window seat. my corner."</div>
+          <div class="echo-note" data-echo="uts-3" data-mei-x="42" data-mei-y="60" data-qing-x="55" data-qing-y="56" data-finale-x="22" data-finale-y="85">"got my first HD here. couldn't even text anyone."</div>
+          <div class="echo-note" data-echo="uts-4" data-mei-x="49" data-mei-y="67" data-qing-x="58" data-qing-y="60" data-finale-x="42" data-finale-y="82">"4pm sunlight on desk 7. my favourite."</div>
 
-          <!-- Burwood pool (2 notes, bur-1..2). cbd empty (off-map); wide
+          <!-- Burwood pool (2 notes, bur-1..2). mei empty (off-map); qing
                coords near Burwood; finale coords on the left column. -->
-          <div class="echo-note" data-echo="bur-1" data-cbd-x="" data-cbd-y="" data-wide-x="14" data-wide-y="48" data-finale-x="12" data-finale-y="45">"Westfield food court, 3pm, this on repeat"</div>
-          <div class="echo-note" data-echo="bur-2" data-cbd-x="" data-cbd-y="" data-wide-x="20" data-wide-y="44" data-finale-x="15" data-finale-y="62">"Mum's voice note played over this song"</div>
+          <div class="echo-note" data-echo="bur-1" data-mei-x="" data-mei-y="" data-qing-x="14" data-qing-y="48" data-finale-x="12" data-finale-y="45">"Westfield food court, 3pm, this on repeat"</div>
+          <div class="echo-note" data-echo="bur-2" data-mei-x="" data-mei-y="" data-qing-x="20" data-qing-y="44" data-finale-x="15" data-finale-y="62">"Mum's voice note played over this song"</div>
 
         </div>
 

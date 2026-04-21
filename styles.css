@@ -3,7 +3,7 @@
    Stylesheet
    Visual language continuity with storyboard1/2:
    - paper cream background (#f5ead6)
-   - tone-aware signal color (--signal): amber for Mei, deep rose-red for Qing,
+   - tone-aware signal color (--signal): amber for Mei, terracotta for Qing,
      brick-red for finale — keeps pin/rail/counter/now-playing accent in the
      same hue family as the page background tone
    - editorial serif headings (Source Serif / Tiempos fallback)
@@ -38,7 +38,7 @@
 }
 
 /* Three-step warm chromatic arc — story builds heat as it progresses.
-   Mei (cream) → Qing (rose) → Finale (coral). Each tone matches its basemap. */
+   Mei (cream) → Qing (peach-terracotta) → Finale (coral). Each tone matches its basemap. */
 
 /* Mei = warm honey-cream (UTS Library, weekday afternoon, amber warmth)
    signal = amber — kept identical to storyboard PNG asset visual language */
@@ -50,14 +50,16 @@ body[data-tone="mei"] {
   --signal-glow: rgba(217, 122, 44, 0.45);
 }
 
-/* Qing = dusty rose (between two cultures — warm-but-lonely magic hour)
-   signal = deep rose-red, same hue family as the rose-tinted basemap */
+/* Qing = warm peach-terracotta (between two cultures — magic hour on the
+   commute home). Hue ~18°, sitting between Mei's amber (~30°) and
+   Finale's brick-red (~8°) so the three-chapter colour arc stays in the
+   orange-red family throughout — never crosses into cool magenta-pink. */
 body[data-tone="qing"] {
-  --tone-bg:     #f3d6d2;
-  --tone-accent: rgba(193, 122, 122, 0.08);
-  --signal:      #b54a55;
-  --signal-warm: #c87078;
-  --signal-glow: rgba(181, 74, 85, 0.40);
+  --tone-bg:     #f5d2bd;
+  --tone-accent: rgba(200, 96, 64, 0.08);
+  --signal:      #c86040;
+  --signal-warm: #dd8a68;
+  --signal-glow: rgba(200, 96, 64, 0.40);
 }
 
 /* Finale = deep coral (two stories converge — heat doubled, warmth peaked)
@@ -554,7 +556,7 @@ body.card-in-view .map-sticky {
   pointer-events: none;
   opacity: 0;
   /* color drives stroke="currentColor" on #rail-line — keeps the rail in
-     the current chapter's signal hue (deep rose-red in Qing, brick-red in finale) */
+     the current chapter's signal hue (terracotta in Qing, brick-red in finale) */
   color: var(--signal);
   transition: opacity 0.8s ease, color 1.2s ease;
 }
@@ -722,7 +724,7 @@ body.card-in-view .map-sticky {
 
 /* Protagonist traces — Mei's and Qing's own contributions.
    Tone-aware: colour tracks the chapter's --signal, so the trace warms
-   from amber (Mei chapter) through rose (Qing chapter) to brick-red
+   from amber (Mei chapter) through terracotta (Qing chapter) to brick-red
    (finale) as the reader scrolls. Reads as the emotional through-line,
    distinct from the cream ambient notes beneath. */
 .trace--mei,
@@ -914,7 +916,7 @@ body.card-in-view .map-sticky {
    map rather than blending into it. The hint of tone is enough to signal
    chapter; readability comes first. */
 body[data-tone="mei"]    .story-card__inner { background: rgba(252, 246, 232, 0.72); border-color: rgba(217, 122, 44,  0.18); }
-body[data-tone="qing"]   .story-card__inner { background: rgba(252, 240, 238, 0.72); border-color: rgba(193, 122, 122, 0.22); }
+body[data-tone="qing"]   .story-card__inner { background: rgba(252, 236, 225, 0.72); border-color: rgba(200, 96,  64,  0.22); }
 body[data-tone="finale"] .story-card__inner { background: rgba(252, 224, 212, 0.74); border-color: rgba(180, 75, 50,   0.32); }
 
 /* Typography — kept identical to the prior .step-* rules so the visual
@@ -975,7 +977,7 @@ body[data-tone="finale"] .story-card__inner { background: rgba(252, 224, 212, 0.
 /* -----------------------------
    Outro — final beat. Full-bleed deep crimson reveal: white "City Echo"
    wordmark and a single pulsing red dot. The chromatic arc lands here:
-   cream → rose → coral → CRIMSON. The dot is the heartbeat of the city
+   cream → terracotta → coral → CRIMSON. The dot is the heartbeat of the city
    that's been listening the whole time.
    ----------------------------- */
 .outro {
@@ -1108,7 +1110,7 @@ body[data-tone="qing"] .now-playing.is-active {
 }
 
 /* Tone-aware now-playing surface — same hue logic as .story-card__inner */
-body[data-tone="qing"]   .now-playing { background: rgba(252, 240, 238, 0.78); border-color: rgba(193, 122, 122, 0.40); }
+body[data-tone="qing"]   .now-playing { background: rgba(252, 236, 225, 0.78); border-color: rgba(200, 96,  64,  0.40); }
 body[data-tone="finale"] .now-playing { background: rgba(252, 224, 212, 0.80); border-color: rgba(180, 75, 50,   0.45); }
 
 .np-icon {

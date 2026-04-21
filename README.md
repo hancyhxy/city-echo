@@ -28,7 +28,7 @@ Vanilla HTML + CSS + JS — no framework, no build step.
 - **`index.html`** — opener, scrolly section with fixed map + sticky story cards + eight invisible step detectors, outro.
 - **`script.js`** — single `STATES` table describes every step (tone, map pan/zoom, active/anchored pins, which protagonist trace to surface, which two ambient notes to reveal, rail line, listener count, now-playing). `IntersectionObserver` fires `applyState(n)` as each detector enters the viewport.
 - **`styles.css`** — tone-aware chromatic chaptering via `body[data-tone]` + CSS custom properties. Protagonist traces (Mei's / Qing's own) use `color-mix()` to adopt the current chapter's `--signal` hue; ambient crowd notes stay cream.
-- **`map-cbd.png` / `map-wide.png` / `map-finale.png`** — three watercolour basemaps, one per chapter, cross-faded by JS.
+- **`map-mei.png` / `map-qing.png` / `map-finale.png`** — three watercolour basemaps, one per chapter, cross-faded by JS.
 
 ## Credits
 
