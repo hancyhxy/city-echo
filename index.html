@@ -7,22 +7,29 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='12' fill='%235a1414'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="gate-open">
 
   <!-- ============================================================
-       OPENER — Two-page editorial intro.
-       Page 1: wordmark + one-line deck (what the project is).
-       Page 2: a single enlarged trace-note (who the story is about).
-       Both participate in the y-mandatory scroll-snap chain below.
+       GATE OVERLAY — full-screen fixed layer shown on load. Body scroll
+       is locked via body.gate-open until the reader clicks a button.
+       On click, .is-dismissed triggers a slide-up transform and body
+       unlocks; the reader then scrolls through the portrait-focus frames.
        ============================================================ -->
-  <header class="opener">
-    <h1 class="opener-title">City Echo</h1>
-    <p class="opener-deck">An app about how belonging gets pinned across a city — one place, one song, one stranger at a time.</p>
+  <section class="gate-overlay" data-gate-overlay aria-label="Begin">
+    <div class="gate-overlay__portraits">
+      <figure class="portrait portrait--gate" data-portrait-gate="mei">
+        <img class="portrait__img" src="mei_avatar.png" alt="Mei — a UTS student, ASCII-style portrait" />
+      </figure>
+      <figure class="portrait portrait--gate" data-portrait-gate="qing">
+        <img class="portrait__img" src="qing_avatar.png" alt="Qing — a commuter, ASCII-style portrait" />
+      </figure>
+    </div>
 
-    <!-- Start gate — satisfies browser autoplay policy. A synchronous
-         audio.play() inside the click handler is the only reliable unlock
-         path on Chrome + Safari + iOS. Either button unlocks audio; the
-         sound button plays unmuted, silence leaves it muted for later. -->
+    <h1 class="gate-overlay__title">City Echo</h1>
+    <p class="gate-overlay__deck">An app about how belonging gets pinned across a city<br />place, song, mood, stranger at a time.</p>
+
+    <!-- Start gate — a click here satisfies the browser autoplay policy
+         and simultaneously unlocks body scroll. -->
     <div class="audio-gate" data-audio-gate>
       <button type="button" class="audio-gate__btn audio-gate__btn--sound" data-audio-gate-sound>
         Begin with sound
@@ -31,9 +38,39 @@
         Read in silence
       </button>
     </div>
+  </section>
 
-    <p class="opener-scroll-hint">scroll ↓</p>
-  </header>
+  <!-- ============================================================
+       HERO — scroll-driven protagonist introduction.
+       .hero-stage is sticky: two portraits stay pinned while 3 invisible
+       .hero-frame blocks scroll past. Each frame sets a tone via
+       IntersectionObserver: neutral → mei-focus → qing-focus.
+       ============================================================ -->
+  <section class="hero-stage" aria-label="Meet Mei and Qing">
+    <div class="portraits" data-portraits>
+      <figure class="portrait" data-portrait="mei">
+        <img class="portrait__img" src="mei_avatar.png" alt="Mei — a UTS student, ASCII-style portrait" />
+        <figcaption class="portrait__name">Mei</figcaption>
+        <div class="portrait__bubble" aria-hidden="true">
+          A student. UTS Library. Stuck on repeat.
+        </div>
+      </figure>
+      <figure class="portrait" data-portrait="qing">
+        <img class="portrait__img" src="qing_avatar.png" alt="Qing — a commuter, ASCII-style portrait" />
+        <figcaption class="portrait__name">Qing</figcaption>
+        <div class="portrait__bubble" aria-hidden="true">
+          A commuter. Burwood to Wynyard. Tired, unsure.
+        </div>
+      </figure>
+    </div>
+    <p class="hero-scroll-hint">scroll ↓</p>
+  </section>
+
+  <!-- Three invisible scroll-snap frames that drive the portrait focus.
+       Each frame is 100vh; the stage above stays pinned as they pass. -->
+  <div class="hero-frame" data-focus="none"></div>
+  <div class="hero-frame" data-focus="mei"></div>
+  <div class="hero-frame" data-focus="qing"></div>
 
   <section class="opener-card" aria-label="About this story">
     <div class="trace-note">

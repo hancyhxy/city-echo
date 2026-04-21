@@ -500,8 +500,12 @@
   function closeGate(withSound) {
     audioMuted = !withSound;
     unlockAudio();
-    document.body.classList.add('audio-gated-out');
-    document.querySelector('.opener')?.classList.add('is-gate-closed');
+    // Slide the overlay up and unlock body scroll. The overlay transition
+    // (~0.9s) runs in parallel with scroll unlock; feels seamless because
+    // body isn't scrolling yet — the overlay is simply leaving the stage.
+    const gateOverlay = document.querySelector('[data-gate-overlay]');
+    if (gateOverlay) gateOverlay.classList.add('is-dismissed');
+    document.body.classList.remove('gate-open');
     if (soundToggle) {
       soundToggle.hidden = false;
       soundToggle.dataset.state = withSound ? 'on' : 'off';
@@ -554,7 +558,8 @@
   // 8 step-detectors, outro). Keyboard navigation walks this array so pages
   // without a step-detector (opener, opener-card) are still reachable.
   const SNAP_SECTIONS = [
-    document.querySelector('.opener'),
+    document.querySelector('.hero-stage'),
+    ...Array.from(document.querySelectorAll('.hero-frame')),
     document.querySelector('.opener-card'),
     ...Array.from(document.querySelectorAll('.step-detector')),
     document.querySelector('.outro')
@@ -610,12 +615,13 @@
   }
 
   // -----------------------------
-  // Opener + opener-card tone reset — whenever either hero page is in view
-  // (including on scroll-back from a step), clear body tone and deactivate
-  // the now-playing card. The CSS gate at styles.css:884-887 only shows the
-  // card for tone="mei"|"qing", so setting "neutral" hides it cleanly.
+  // Hero + opener-card tone reset — whenever the hero stage or the
+  // opener-card is in view (including on scroll-back from a step), clear
+  // body tone and deactivate the now-playing card. The CSS gate at
+  // styles.css only shows the card for tone="mei"|"qing", so setting
+  // "neutral" hides it cleanly.
   // -----------------------------
-  const opener = document.querySelector('.opener');
+  const heroStage = document.querySelector('.hero-stage');
   const openerNeutralObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -624,8 +630,33 @@
       }
     });
   }, { threshold: 0.5 });
-  if (opener)     openerNeutralObserver.observe(opener);
+  if (heroStage)  openerNeutralObserver.observe(heroStage);
   if (openerCard) openerNeutralObserver.observe(openerCard);
+
+  // -----------------------------
+  // Hero frame focus — three 100vh .hero-frame blocks scroll past the
+  // sticky .hero-stage. Each frame carries [data-focus]="none|mei|qing";
+  // when it enters the viewport, we flip .is-focus on the matching
+  // portrait. Pure scroll-driven: no timers, no autoplay, readers
+  // control the pace.
+  // -----------------------------
+  const heroFrames = Array.from(document.querySelectorAll('.hero-frame'));
+  const heroPortraits = Array.from(document.querySelectorAll('[data-portrait]'));
+  if (heroFrames.length && heroPortraits.length) {
+    const frameObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const focus = entry.target.dataset.focus;   // "none" | "mei" | "qing"
+        heroPortraits.forEach(p => {
+          p.classList.toggle('is-focus', p.dataset.portrait === focus);
+        });
+        // Hide the scroll hint once the reader moves past the neutral frame.
+        if (focus !== 'none') document.body.classList.add('hero-advanced');
+        else                   document.body.classList.remove('hero-advanced');
+      });
+    }, { threshold: 0.5 });
+    heroFrames.forEach(f => frameObserver.observe(f));
+  }
 
   // -----------------------------
   // Scrolly visibility — fade the fixed-positioned map AND all story-cards
